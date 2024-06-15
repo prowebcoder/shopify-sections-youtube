@@ -1,0 +1,172 @@
+{%- assign id = '#shopify-section-' | append: section.id -%}
+{%- style -%}
+  {{ id }} .embla__viewport {
+    overflow: hidden;
+  }
+
+  {{ id }} .embla__container {
+    display: flex;
+  }
+
+  {{ id }} .embla__slide {
+    flex: 0 0 100%;
+    min-width: 0;
+  }
+
+  {{ id }} {
+     width:100%;
+     background-color: {{ section.settings.section_bg }};
+     padding: {{section.settings.mob_padding_top}}px 0 {{section.settings.mob_padding_bottom}}px;
+     margin: {{section.settings.mob_margin_top}}px auto {{section.settings.mob_margin_bottom}}px;
+  }
+
+   {{ id }} .main-wrapper{
+    position: relative;
+  }
+
+  {{ id }} .main-wrapper .embla__next,  {{ id }} .main-wrapper .embla__prev{
+    position: absolute;
+    top: 178px;
+    border: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: #f2f2f2;
+    padding: 8px;
+    font-weight: bold;
+    border-radius: 100px;
+    cursor: pointer;
+  }
+
+    {{ id }} .main-wrapper .embla__next svg,  {{ id }} .main-wrapper .embla__prev svg{
+      height: 26px;
+      width: 26px;
+    }
+
+
+  {{ id }} .main-wrapper .embla__next:hover,  {{ id }} .main-wrapper .embla__prev:hover{
+    background: #c9c9c9;
+  }
+
+  {{ id }} .main-wrapper .embla__prev{
+    left: 0px;
+  }
+
+  {{ id }} .main-wrapper .embla__next {
+    right: 0px;
+  }
+
+  {{ id }} .slide video{
+    background-color: transparent;
+    height: 100%;
+    width: 100%;
+    background: rgba(0,0,0, 0.8);
+    object-fit: cover;
+    box-sizing: border-box;
+    border-radius: 12px;
+    border: 2px solid black;
+    box-shadow: 0px 6px 0px black;
+  }
+
+  {{ id }} .embla__container .slide {
+    height: 400px;
+    padding: 16px;
+  }
+
+  @media screen and (min-width: 750px) {
+      {{ id }} {
+        padding: {{section.settings.desk_padding_top}}px calc(4rem / var(--font-body-scale)) {{section.settings.desk_padding_bottom}}px;
+        margin: {{section.settings.desk_margin_top}}px auto {{section.settings.desk_margin_bottom}}px;
+      }
+
+     {{ id }} .embla__slide {
+       {% if section.blocks.size == 2 %}
+         flex: 0 0 50% !important;
+       {% elsif section.blocks.size >= 3 %}
+         flex: 0 0 33.33% !important;  
+       {% endif %}
+      }
+
+     {{ id }} .embla__container .slide {
+        height: 400px;
+        padding: 5px;
+      }
+
+     {{ id }} .main-wrapper .embla__prev{
+        left: -42px;
+      }
+
+      {{ id }} .main-wrapper .embla__next {
+        right: -42px;
+      }
+
+  }
+
+   @media screen and (min-width: 426px) {
+     {{ id }} .embla__slide {
+        flex: 0 0 50% !important;
+      }
+  }
+
+   @media screen and (min-width: 1020px) {
+     {{ id }} .embla__slide {
+       {% if section.blocks.size == 2 %}
+         flex: 0 0 50% !important;
+       {% elsif section.blocks.size == 3 %}
+         flex: 0 0 33.33% !important;  
+       {% elsif section.blocks.size >= 4 %}
+         flex: 0 0 16.66% !important;   
+       {% endif %}
+      }
+  }
+{%- endstyle -%}
+
+ 
+ 
+ <!-- Embla -->
+ <div id="{{ section.id }}" class="page-width">
+      <div class="main-wrapper embla">
+        <div class="embla__viewport">
+        <div class="embla__container" style="transform: translate3d(0px, 0px, 0px);">
+          {% for block in section.blocks %}
+          <div class="slide embla__slide">
+{% if block.settings.carousel_vid != blank %}
+  <video src="{{ block.settings.carousel_vid.sources[1].url }}"  playsinline  muted> </video>
+  {% endif %}
+            
+          </div>
+            {% endfor %}
+        </div>
+        </div>
+
+     <button class="embla__prev">{% render 'prev-icon' %}</button>
+     <button class="embla__next">{% render 'next-icon' %}</button>
+      </div>
+ </div>
+<script>
+  document.addEventListener("DOMContentLoaded", (event) => {
+  new CustomEmblaCarousel("#{{ section.id }} .embla")
+});
+
+</script>
+{% schema %}
+  {
+    "name": "Video Carousel",
+    "settings": [],
+    "blocks":[
+      {
+        "type":"carousel",
+        "name":"Carousel Item",
+        "settings": [{
+          "type":"video",
+          "id":"carousel_vid",
+          "label":"Carousel Video"
+        }]
+      }
+    ],
+    "presets": [{
+      "name":"Video carousel",
+      "category":"Section"
+    }]
+  }
+{% endschema %}

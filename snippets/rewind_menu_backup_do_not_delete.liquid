@@ -1,0 +1,16 @@
+          <div id="rewind-menu-backup">
+          [
+          {% for linklist in linklists %}
+          { "id" : "{{ linklist.handle }}",
+            "handle" : "{{ linklist.handle }}",
+            "title" : {{ linklist.title | strip_html | json  }},
+            "links" : [
+                {% for link in linklist.links %}
+                  {"url" : "{{ link.url }}",
+                 "title" : {{ link.title | strip_html | json }}}{% unless link == linklist.links.last %},{% endunless %}
+                {% endfor %}
+              ]
+          }{% unless linklist.handle == linklists.last.handle %},{% endunless %}
+          {% endfor %}
+          ]
+          </div>

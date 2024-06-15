@@ -1,0 +1,76 @@
+{%- assign id = '#shopify-section-' | append: section.id -%}
+
+{% style %}
+ {{id}} .marquee {
+    position: relative;
+    width: 100vw;
+    max-width: 100%;
+    height: 200px;
+    overflow-x: hidden;
+  }
+ {{id}} .marquee-content {
+      display: flex;
+      gap: 8rem;
+  }
+  {{id}} .track {
+    position: absolute;
+    white-space: nowrap;
+    font-size:6rem;
+    will-change: transform;
+    animation: marquee 38s linear infinite;
+  }
+
+  @keyframes marquee {
+    from { transform: translateX(0); }
+    to { transform: translateX(-50%); }
+  }
+
+    {{id}} .marquee .track:hover {
+      animation-play-state: paused;
+    }
+{% endstyle %}
+
+<div class="marquee">
+  <div class="track">
+    <div class="marquee-content">
+      {% for i in (1..5) %}
+        {% for block in section.blocks %}
+          <span class="marquee-gap" style="color:{{ block.settings.color }}">{{ block.settings.text }}</span>
+        {% endfor %}
+      {% endfor %}
+    </div>
+  </div>
+</div>
+
+{% schema %}
+  {
+  "name": "Marquee Full Width",
+  "settings": [],
+  "blocks": [
+    {
+      "type": "ScrollingText",
+      "name": "Scrolling Text",
+      "limit": 4,
+      "settings": [
+        {
+          "type": "text",
+          "id": "text",
+          "default": "Title",
+          "label": "Scrolling Text"
+        },
+        {
+          "type": "color",
+          "id": "color",
+          "default": "#000000",
+          "label": "Text Color"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Marquee Full Width"
+    }
+  ]
+}
+{% endschema %}

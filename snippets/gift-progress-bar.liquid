@@ -1,0 +1,353 @@
+{% comment %}
+  Renders a gift progress bar
+
+  Usage:
+  {% render 'gift-progress-bar' %}
+{% endcomment %}
+
+{%- liquid
+   assign total_price = cart.total_price | divided_by: 100.0 | format: "%.2f"
+  assign target_price = settings.limit_price
+  assign giftavailable = false
+  assign product = settings.free_product
+  assign excluded_product_id = product.id
+  assign total_price_calc = 0
+-%}
+
+{% for item in cart.items %}
+  {% unless item.product_id == excluded_product_id %}
+    {% assign item_price = item.price | times: item.quantity | divided_by: 100.0 %}
+    {% assign total_price_calc = total_price_calc | plus: item_price %}
+  {% endunless %}
+{% endfor %}
+
+{% assign remaining_amount = target_price | minus: total_price %}
+
+<style>
+   .progress-bar-container {
+     width: 100%;
+     margin: 12px 0;
+     overflow: hidden;
+   }
+
+   .free-item-accordion{
+     padding: 16px 0;
+     border-top: .1rem solid rgba(var(--color-foreground),.2);
+   }
+
+  .free-item-accordion summary{
+    position: relative;
+    display: flex;
+    gap: 4px;
+    justify-content: space-between;
+  }
+
+  .free-item-accordion summary::after{
+    position: absolute;
+    right: 0;
+    top: -8px;
+    content: "+";
+    font-size: 20px;
+  }
+
+  .free-item-accordion[open] summary::after{
+    position: absolute;
+    right: 0;
+    top: -22px;
+    content: "-";
+    font-size: 32px;
+  }
+
+   .free-item-accordion svg{
+     height: 16px;
+     width: 16px;
+   }
+
+  .free-item-card {
+     position: relative;
+     border-radius: var(--inputs-radius);
+     border: 2px solid black;
+     box-shadow: 0px 6px 0px black;
+     padding: 8px;
+     overflow: hidden;
+     margin-top: 16px;
+   }
+
+   .free-item-card .btn{
+     position: absolute;
+     inset: 0;
+     cursor: pointer;
+     background: transparent;
+     border: none;
+   }
+
+  .free-item-container{
+    height: max-content;
+    display: flex;
+    justify-content: flex-start;
+    gap: 8px;
+  }
+
+  .free-item__image{
+    border-radius: 4px;
+  }
+
+  .free-item-card .btn:disabled{
+     cursor: not-allowed;
+     background: rgba(250, 250, 250, 0.5);
+   }
+
+  .free-item-card .btn svg{
+     height: 32px;
+     width: 32px;
+   }
+
+  .free-item-card .btn span{
+      background: #e6e6e6;
+      height: max-content;
+      display: block;
+      width: max-content;
+      border-radius: 32px;
+      padding: 6px;
+      margin: 0 auto;
+   }
+
+  .free-item__details{
+    margin: 0 0 12px;
+    line-height: normal;
+  }
+
+  .free-item__details .review-stars{
+    height: 14px;
+    object-fit: contain;
+    float:left;
+    margin-top: 2px;
+  }
+
+  .free-item__details .free-item__name{
+    line-height: normal;
+  }
+
+   .progress-bar-fill {
+     height: 12px;
+     background-color: {{ settings.pending_bar_color }};
+     text-align: center;
+     line-height: 12px;
+     border-radius: 100px;
+     display: block !important;
+     color: #fff;
+     font-weight: bold;
+   }
+
+   .progress-bar-fill.success {
+     background-color: {{ settings.success_bar_color }};
+     width: 100%;
+   }
+
+   .bar-container{
+     display: grid;
+     grid-template-columns: 1fr 30px;
+     align-items: center;
+   }
+
+   .bar-background{
+     width: 100%;
+     background: white;
+     border: 1px solid #000000;
+     border-radius: 100px;
+     height: max-content;
+   }
+
+   .planner-icon{
+     border-radius: 100px;
+     display: flex;
+     justify-content: center;
+     align-items: center;
+     width: 40px;
+     height: 40px;
+     margin-left: -10px;
+     color: white;
+     background-color: {{ settings.pending_icon_bg }};
+   }
+
+   .planner-icon.success {
+     background-color: {{ settings.success_icon_bg }};
+   }
+
+   .progress-info{
+     font-size: 14px;
+     padding: 0 16px 0 0;
+     font-weight: 400;
+     line-height: normal;
+   }
+
+   .progress-info .price{
+     font-size: 14px;
+     font-weight: 600;
+     line-height: normal;
+   }
+</style>
+
+<div class="progress-bar-container">
+  {% for item in cart.items %}
+    {% if item.variant_id == product.variants.first.id %}
+      {% assign giftavailable = true %}
+      {% break %}
+    {% endif %}
+  {% endfor %}
+
+  <input id="progress-bar-gift-product" value="{{ product.id }}" hidden />
+  <input id="progress-bar-is-gift-available" value="{{ giftavailable }}" hidden />
+  <input id='progress-bar-target-price' value="{{ target_price }}" hidden />
+  <input id='progress-bar-total-price' value="{{ total_price_calc }}" hidden />
+  
+  {% unless giftavailable %}
+<div class="progress-bar-container">
+  {% if total_price >= target_price %}
+    <div class="bar-container">
+      <div class="bar-background">
+        <div
+          class="progress-bar-fill success"
+        ></div>
+      </div>
+      <span class="planner-icon success">
+        {% if settings.success_icon != blank %}
+          <img src="{{ settings.success_icon | image_url }}" alt="icon-img" height="20" width="20">
+        {% else %}
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            fill="currentColor"
+            width="20"
+            height="20"
+            viewBox="0 0 256 256"
+            id="Flat"
+          >
+            <path d="M103.99951,196.00012a11.9627,11.9627,0,0,1-8.48535-3.51465l-56-55.99511a12.00044,12.00044,0,0,1,16.9707-16.97168l47.51465,47.51123L207.51416,63.51916a12.0001,12.0001,0,0,1,16.9707,16.97071l-112,111.9956A11.9627,11.9627,0,0,1,103.99951,196.00012Z"/>
+          </svg>
+        {% endif %}
+      </span>
+    </div>
+  {% else %}
+    <div class="bar-container">
+      <div class="bar-background">
+        <div
+          class="progress-bar-fill"
+          style="width: {{ total_price | times: 100.0 | divided_by: target_price }}%;"
+        ></div>
+      </div>
+      <span class="planner-icon">
+        {% if settings.pending_icon != blank %}
+          <img src="{{ settings.pending_icon | image_url }}" alt="icon-img" height="20" width="16">
+        {% else %}
+          <svg xmlns="http://www.w3.org/2000/svg" height="20" width="16" viewBox="0 0 384 512">
+            <path fill="currentColor" d="M192 0c-41.8 0-77.4 26.7-90.5 64H64C28.7 64 0 92.7 0 128V448c0 35.3 28.7 64 64 64H320c35.3 0 64-28.7 64-64V128c0-35.3-28.7-64-64-64H282.5C269.4 26.7 233.8 0 192 0zm0 64a32 32 0 1 1 0 64 32 32 0 1 1 0-64zM72 272a24 24 0 1 1 48 0 24 24 0 1 1 -48 0zm104-16H304c8.8 0 16 7.2 16 16s-7.2 16-16 16H176c-8.8 0-16-7.2-16-16s7.2-16 16-16zM72 368a24 24 0 1 1 48 0 24 24 0 1 1 -48 0zm88 0c0-8.8 7.2-16 16-16H304c8.8 0 16 7.2 16 16s-7.2 16-16 16H176c-8.8 0-16-7.2-16-16z"/>
+          </svg>
+        {% endif %}
+      </span>
+    </div>
+  {% endif %}
+</div>
+
+<details class="free-item-accordion">
+  <summary>
+    {% if total_price >= target_price %}
+      <div class="progress-info">
+        {{ settings.success_msg }}
+      </div>
+    {% else %}
+      <div class="progress-info">
+        You're just <span class="price">${{ remaining_amount }}</span> away from a free stream planner!
+      </div>
+    {% endif %}
+  </summary>
+
+  {% if product != blank %}
+      {% if total_price < target_price %}
+        <div class="free-item-card">
+          <div class="free-item-container">
+            <img
+              class="free-item__image"
+              src="{{ product.featured_image | image_url: width: 300 }}"
+              loading="lazy"
+              width="150"
+              height="80"
+            >
+            <div>
+              <p class="free-item__details">
+                <img
+                  src="https://cdn.shopify.com/s/files/1/0601/8760/7234/files/5_Star_Raiting.png?v=1701771943"
+                  alt="review-stars"
+                  height="14"
+                  width="80"
+                  class="review-stars"
+                >
+                <span class="free-item__name h4">
+                  &nbsp;
+                  {{- product.title | escape -}}
+                </span>
+              </p>
+
+              <div class="cart-item__price-wrapper">
+                <span class="price">
+                  {{ 0 | money }}
+                </span>
+              </div>
+            </div>
+          </div>
+          <button class="btn" disabled>
+            <span>
+              {% render 'icon-lock' %}
+            </span>
+          </button>
+        </div>
+      {% else %}
+        {%- form 'product',
+          product,
+          class: 'form free-item-card',
+          novalidate: 'novalidate',
+          data-type: 'add-to-cart-form',
+          id: 'addToCartForm'
+        -%}
+          <div class="free-item-container">
+            <img
+              class="free-item__image"
+              src="{{ product.featured_image | image_url: width: 300 }}"
+              loading="lazy"
+              width="150"
+              height="80"
+            >
+            <div>
+              <p class="free-item__details">
+                <img
+                  src="https://cdn.shopify.com/s/files/1/0601/8760/7234/files/5_Star_Raiting.png?v=1701771943"
+                  alt="review-stars"
+                  height="14"
+                  width="80"
+                  class="review-stars"
+                >
+                <span class="free-item__name h4">
+                  &nbsp;
+                  {{- product.title | escape -}}
+                </span>
+              </p>
+
+              <div class="cart-item__price-wrapper">
+                <span class="price">
+                  {{ 0 | money }}
+                </span>
+              </div>
+            </div>
+          </div>
+          <input type="hidden" name="id" value="{{ product.variants.first.id }}">
+          <input
+            type="button"
+            class="btn"
+            onclick="attachFormSubmitListener();"
+            value=" "
+          />
+        {%- endform -%}
+    {% endif %}
+  {% endif %}
+</details>
+{% endunless %}
+</div>

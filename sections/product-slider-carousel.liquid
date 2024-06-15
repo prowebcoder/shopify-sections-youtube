@@ -1,0 +1,66 @@
+<link rel="stylesheet" href="{{ 'flickity.css' | asset_url }}">
+<script src="{{ 'flickity.pkgd.min.js' | asset_url }}" async></script>
+<div class="page-width section-{{ section.id }}-padding">
+  <div class="carousel" data-flickity='{ "groupCells": true ,"freeScroll": true,"contain": true, "wrapAround": true, "autoPlay": true, "cellAlign": "left" }'>
+   
+        {%- for product in section.settings.collection.products limit: 20 -%}
+      <div class="carousel-cell">
+            {% render 'card-product',
+              card_product: product,
+              media_aspect_ratio: section.settings.image_ratio,
+              image_shape: section.settings.image_shape,
+              show_secondary_image: section.settings.show_secondary_image,
+              show_vendor: section.settings.show_vendor,
+              show_rating: section.settings.show_rating,
+              show_quick_add: section.settings.enable_quick_add,
+              section_id: section.id
+            %}
+      </div>
+          {% endfor %}
+  
+  </div>
+</div>
+
+{% style %}
+.section-{{ section.id }}-padding {
+padding-top: {{ section.settings.padding_top | times: 1 | round: 0 }}px;
+padding-bottom: {{ section.settings.padding_bottom | times: 1 | round: 0 }}px;
+}
+.section-{{ section.id }}-padding .carousel-cell {
+width: 20%;
+
+margin-right: 10px;
+border-radius: 5px;
+text-align:{{section.settings.column_alignment}}
+} 
+.carousel-cell:before {
+display: block;
+text-align: center;
+line-height: 200px;
+font-size: 80px;
+color: white;
+}
+.flickity-enabled.is-draggable .flickity-viewport.is-pointer-down {
+cursor: -webkit-grabbing;
+cursor: grabbing;
+box-shadow: none;
+}
+{% endstyle %}
+{% schema %}
+{
+  "name": "Product Carousel",
+  "settings": [
+     {
+      "type": "collection",
+      "id": "collection",
+      "label": "t:sections.featured-collection.settings.collection.label"
+    }
+  ],
+
+  "presets": [
+    {
+      "name": "Product Carousel"
+    }
+  ]
+}
+{% endschema %}

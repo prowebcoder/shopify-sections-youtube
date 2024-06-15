@@ -1,0 +1,468 @@
+{%- assign id = '#shopify-section-' | append: section.id -%}
+
+{% style %}
+  {{ id }} {
+    background: {{ section.settings.background_color }};
+    --panel-bg: {{ section.settings.panel_color }};
+    --border-color: {{ section.settings.border_color }};
+    --question-color: {{ section.settings.q_color }};
+    --answer-color: {{ section.settings.a_color }};
+
+    {%- assign min = section.settings.q_size_small -%}
+    {%- assign max = section.settings.q_size_large -%}
+    {%- assign min_rem = min | append: 'rem' -%}
+    {%- assign max_rem = max | append: 'rem' -%}
+    --title-font-size: clamp({{ min_rem }}, calc({{ min_rem }} + ({{ max }} - {{ min }}) * ((100vw - 25rem) / (64 - 25))), {{ max_rem }});
+  }
+{% endstyle %}
+
+<style>
+  .flex { display: flex }
+  .items-center { align-items: center }
+  .justify-between { justify-content: space-between }
+  .w-full { width: 100% }
+  .text-left { text-align: left }
+  .m-0 { margin: 0 }
+  .p-0 { padding: 0 }
+  .overflow-hidden { overflow: hidden }
+  .cursor-pointer { cursor: pointer }
+
+  {{ id }} .page-width {
+     padding: {{section.settings.mob_padding_top}}px 1.5rem {{section.settings.mob_padding_bottom}}px;
+     margin: {{section.settings.mob_margin_top}}px auto {{section.settings.mob_margin_bottom}}px;
+  }
+
+  {{ id }} .faq-row{
+    display: grid;
+    grid-template-columns: repeat(1, 1fr);
+  }
+
+  {{ id }} .faq-row .faq-heading-content{
+    padding: 0px 0px 40px;
+  }
+
+   {{ id }} .faq-row .faq-heading-content .faq-heading{
+    margin: 0 0 20px;
+    font-weight: 600;
+  }
+
+   {{ id }} .faq-row .faq-heading-content .faq-subheading p{
+    margin: 0;
+  }
+
+  {{ id }} .faq-title {
+    border-bottom: 1px solid  var(--border-color);
+    font-size: var(--title-font-size);
+    color: var(--question-color);
+  }
+
+  {{ id }} .faq-title .faq-button span{
+    color: var(--question-color);
+  }
+
+  {{ id }} .faq-panel {
+    will-change: height;
+    border-bottom: 1px solid var(--border-color);
+    background-color: var(--panel-bg);
+    color: var(--answer-color);
+  }
+
+  .faq-button {
+    font: inherit;
+    background: transparent;
+    border: 0;
+    padding: 24px 0px;
+  }
+
+  .faq-icon {
+    width: clamp(12px, 0.65em, 20px);
+    height: clamp(12px, 0.65em, 20px);
+    min-width: clamp(12px, 0.65em, 20px);
+    margin-left: 1rem;
+  }
+
+  .faq-icon-minus {
+    transition: transform 240ms cubic-bezier(0.4, 0.0, 0.2, 1);
+    transform-origin: 50% 50%;
+  }
+
+  .faq-button[aria-expanded="true"] .faq-icon-minus {
+    transform: rotate(90deg);
+  }
+
+  .faq-panel * {
+    color: inherit;
+  }
+
+  .faq-panel[data-is-animating] {
+    display: block!important;
+  }
+
+   @media screen and (min-width: 750px) {
+     {{ id }} .page-width {
+        padding: {{section.settings.desk_padding_top}}px 5rem {{section.settings.desk_padding_bottom}}px;
+        margin: {{section.settings.desk_margin_top}}px auto {{section.settings.desk_margin_bottom}}px;
+      }
+     
+      {{ id }} .faq-row{
+        grid-template-columns: repeat(2, 1fr);
+        align-items: flex-start;
+      }
+      {{ id }} .faq-row .faq-heading-content{
+        padding: 40px 60px 40px 0;
+      }
+   }
+</style>
+
+{%- comment -%} ---------------- THE MARKUP ---------------- {%- endcomment -%}
+
+<div class="page-width">
+  <div class="faq-row">
+    <div class="faq-heading-content">
+      <h2 class="faq-heading h1">{{ section.settings.section_heading }}</h2>
+      <div class="faq-subheading">{{ section.settings.section_subheading }}</div>
+    </div>
+    <div class="faq-accordion">
+      {%- for block in section.blocks -%}
+        {%- if block.settings.title != blank and block.settings.content != blank -%}
+          {%- if block.settings.checkbox_expanded == true -%}
+            {%- assign expanded = 'true' -%}
+            {%- assign hidden = '' -%}
+          {%- else -%}
+            {%- assign expanded = 'false' -%}
+            {%- assign hidden = 'hidden' -%}
+          {%- endif -%}
+
+          <h3 class="faq-title m-0 p-0" data-faq-trigger="{{ block.id }}" {{ block.shopify_attributes }}>
+            <button
+              class="faq-button flex items-center justify-between w-full text-left m-0 cursor-pointer"
+              data-faq-button="{{ block.id }}"
+              aria-expanded="{{ expanded }}"
+            >
+              <span>{{ block.settings.title }}</span>
+              <svg class="faq-icon" viewBox="0 0 14 14" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                <path class="faq-icon-minus" fill="currentColor" d="M8 0v14H6V0z"></path>
+                <path fill="currentColor" d="M0 6h14v2H0z"></path>
+              </svg>
+            </button>
+          </h3>
+
+          <div class="faq-panel rte overflow-hidden custom-bg" data-faq-panel="{{ block.id }}" {{ hidden }}>
+            <div class="faq-wrap p-4">{{ block.settings.content }}</div>
+          </div>
+        {%- endif -%}
+      {%- endfor -%}
+    </div>
+  </div>
+</div>
+
+{%- comment -%} -------------- THE RICH SCHEMA ------------- {%- endcomment -%}
+
+{%- if section.settings.enable_rich_schema -%}
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+      {%- for block in section.blocks -%}
+      {%- if block.settings.title != blank and block.settings.content != blank  -%}
+      {
+        "@type": "Question",
+        "name": {{ block.settings.title | json }},
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": {{ block.settings.content | strip_html | json }}
+        }
+      }{%- unless forloop.last -%},{%- endunless -%}
+      {%- endif -%}
+      {%- endfor -%}
+      ]
+    }
+  </script>
+{%- endif -%}
+
+{%- comment -%} ---------------- THE CONFIG ---------------- {%- endcomment -%}
+
+<script type="application/json" data-faq-config="{{ section.id }}">
+  {
+    "sectionId": {{ section.id | json }},
+    "blockIds": {{ section.blocks | map: 'id' | json }}
+  }
+</script>
+
+{%- comment -%} ---------------- THE SETTINGS ---------------- {%- endcomment -%}
+
+{% schema %}
+{
+  "name": "FAQ",
+  "class": "sd-faq",
+  "tag": "article",
+
+  "settings": [
+    {
+      "type": "header",
+      "content": "Rich schema"
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_rich_schema",
+      "default": true,
+      "label": "Enable FAQ rich schema?"
+    },
+        {
+      "type": "header",
+      "content": "Section Content"
+    },
+    {
+          "type": "text",
+          "id": "section_heading",
+          "label": "Section heading",
+          "default": "Section heading"
+        },
+        {
+          "type": "richtext",
+          "id": "section_subheading",
+               "label": "Section sub heading",
+          "default": "<p>Section sub heading</p>"
+        },
+    {
+      "type": "header",
+      "content": "Dimensions"
+    },
+    {
+      "type": "text",
+      "id": "max_width",
+      "label": "Max width",
+      "default": "64rem"
+    },
+    {
+        "type": "header",
+        "content": "Desktop Spacing"
+      },
+    {
+        "type": "range",
+        "id": "desk_margin_top",
+        "min": 0,
+        "max": 100,
+        "step": 1,
+        "unit": "px",
+        "label": "Section Margin Top",
+        "default": 20
+     },
+     {
+        "type": "range",
+        "id": "desk_margin_bottom",
+        "min": 0,
+        "max": 100,
+        "step": 1,
+        "unit": "px",
+        "label": "Section Margin Bottom",
+        "default": 20
+     },
+        {
+        "type": "range",
+        "id": "desk_padding_top",
+        "min": 0,
+        "max": 100,
+        "step": 1,
+        "unit": "px",
+        "label": "Section Padding Top",
+        "default": 20
+     },
+     {
+        "type": "range",
+        "id": "desk_padding_bottom",
+        "min": 0,
+        "max": 100,
+        "step": 1,
+        "unit": "px",
+        "label": "Section Padding Bottom",
+        "default": 20
+     },
+       {
+        "type": "header",
+        "content": "Mobile Spacing"
+      },
+    {
+        "type": "range",
+        "id": "mob_margin_top",
+        "min": 0,
+        "max": 100,
+        "step": 1,
+        "unit": "px",
+        "label": "Section Margin Top",
+        "default": 20
+     },
+     {
+        "type": "range",
+        "id": "mob_margin_bottom",
+        "min": 0,
+        "max": 100,
+        "step": 1,
+        "unit": "px",
+        "label": "Section Margin Bottom",
+        "default": 20
+     },
+       {
+        "type": "range",
+        "id": "mob_padding_top",
+        "min": 0,
+        "max": 100,
+        "step": 1,
+        "unit": "px",
+        "label": "Section Padding Top",
+        "default": 20
+     },
+     {
+        "type": "range",
+        "id": "mob_padding_bottom",
+        "min": 0,
+        "max": 100,
+        "step": 1,
+        "unit": "px",
+        "label": "Section Padding Bottom",
+        "default": 20
+     },
+    {
+      "type": "header",
+      "content": "Colors"
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Background color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "border_color",
+      "label": "Border color",
+      "default": "#eeeeee"
+    },
+    {
+      "type": "color",
+      "id": "panel_color",
+      "label": "Panel color",
+      "default": "#fdfdfd"
+    },
+    {
+      "type": "header",
+      "content": "Question"
+    },
+    {
+      "type": "range",
+      "id": "q_size_small",
+      "min": 1,
+      "max": 2,
+      "step": 0.1,
+      "unit": "rem",
+      "label": "Small devices font size",
+      "default": 1
+    },
+    {
+      "type": "range",
+      "id": "q_size_large",
+      "min": 1,
+      "max": 3,
+      "step": 0.1,
+      "unit": "rem",
+      "label": "Large devices font size",
+      "default": 1.4
+    },
+    {
+      "type": "color",
+      "id": "q_color",
+      "label": "Question text color"
+    },
+    {
+      "type": "header",
+      "content": "Answer"
+    },
+    {
+      "type": "color",
+      "id": "a_color",
+      "label": "Answer text color"
+    }
+  ],
+
+  "blocks": [
+    {
+      "type": "faq",
+      "name": "FAQ",
+      "settings": [
+        {
+          "type": "checkbox",
+          "id": "checkbox_expanded",
+          "default": false,
+          "label": "Expanded?"
+        },
+        {
+          "type": "inline_richtext",
+          "id": "title",
+          "label": "FAQ title",
+          "default": "FAQ title"
+        },
+        {
+          "type": "richtext",
+          "id": "content",
+          "label": "FAQ content",
+          "default": "<p>FAQ content</p>"
+        }
+      ]
+    }
+  ],
+
+  "presets": [
+    {
+      "name": "FAQ",
+      "category": "Section"
+    }
+  ]
+}
+{% endschema %}
+
+{%- comment -%} ------------------ THE JS ----------------- {%- endcomment -%}
+
+<script src="{{ 'faq.js' | asset_url }}" defer></script>
+
+{%- comment -%} ---------------- THE NO-JS ---------------- {%- endcomment -%}
+
+<noscript>
+  <style>
+    #shopify-section-{{ section.id }} [hidden] { display: block }
+    .faq-icon { display: none }
+  </style>
+</noscript>
+
+{%- comment -%} ---------------- THE EDITOR ------------------ {%- endcomment -%}
+
+{%- if request.design_mode -%}
+  <script>
+    (function FAQThemeEditor(SectionsDesign) {
+      'use strict';
+
+      document.addEventListener('shopify:section:load', sectionLoad);
+      document.addEventListener('shopify:block:select', blockToggle);
+      document.addEventListener('shopify:block:deselect', blockToggle);
+
+      function sectionLoad(evt) {
+        var sectionId = evt.detail.sectionId;
+        var section =  SectionsDesign.faq[sectionId];
+
+        if (!section) return;
+        SectionsDesign.faq[sectionId] = section.init(sectionId);
+      }
+
+      function blockToggle(evt) {
+        var section = SectionsDesign.faq[evt.detail.sectionId];
+        if (!section) return;
+
+        var block = section.blocks[evt.detail.blockId];
+        if (!block) return;
+
+        evt.type === 'shopify:block:select' ? block.select() : block.deselect();
+      }
+
+    })(window.SectionsDesign = window.SectionsDesign || {});
+  </script>
+{%- endif -%}

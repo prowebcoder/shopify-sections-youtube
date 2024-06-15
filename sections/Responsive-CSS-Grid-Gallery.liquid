@@ -1,0 +1,218 @@
+{%- style -%}
+  @import url('https://fonts.googleapis.com/css?family=Yanone+Kaffeesatz');
+* {
+  padding:0;
+  margin:0;
+  box-sizing:border-box;
+}
+.container {
+  display:grid;
+  grid-gap:10px;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  grid-auto-rows: minmax(100px, 200px);
+  grid-auto-flow:dense;
+  padding:50px;
+  background: linear-gradient(to right, #000000, #434343);
+
+}
+.item {
+  overflow:hidden;
+  border: 2px solid #fff;
+  position:relative;
+}
+.frame {
+  position:absolute;
+  height:100%;
+  width:100%;
+  background:rgba(0,0,0,.5);
+  top:100%;
+  transition:all .1s ease;
+  display:grid;
+  justify-items:center;
+  align-items:center;
+  transition-delay:.1s;
+}
+.frame a {
+  padding:10px 20px;
+  background: linear-gradient(to right, #141e30, #243b55);
+  color:#fff;
+  border-radius:40px;
+  font-size:10px;
+  text-decoration:none;
+  text-transform:uppercase;
+  font-family: 'Yanone Kaffeesatz', sans-serif;
+  letter-spacing:3.5px;
+}
+.frame a:hover {
+  background:#fff;
+  color: royalblue;
+}
+.item:hover .frame{
+  top:0;
+}
+.item img {
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  transition:1s;
+  transition-delay:.2s;
+  opacity:.6;
+}
+.item:hover  img {
+  transform:scale(1.4);
+  opacity:1;
+}
+.vertical {
+  grid-column:span 2;
+}
+.horizontal {
+  grid-row: span 2;
+}
+.big {
+  grid-column: span 2;
+  grid-row: span 2;
+}
+   {%- endstyle -%}
+<div class="container">
+
+  <div class="item"><img src="https://source.unsplash.com/random/1914x900" alt="Phto">
+    <div class="frame"><a href="#">view</a>
+    </div>
+  </div>
+
+  <div class="item vertical"><img src="https://source.unsplash.com/random/1915x900" alt="Phto">
+    <div class="frame"><a href="#">view</a>
+    </div>
+  </div>
+
+  <div class="item horizontal"><img src="https://source.unsplash.com/random/1916x900" alt="Phto">
+    <div class="frame"><a href="#">view</a>
+    </div>
+  </div>
+
+  <div class="item"><img src="https://source.unsplash.com/random/1917x900" alt="Phto">
+    <div class="frame"><a href="#">view</a>
+    </div>
+  </div>
+
+  <div class="item"><img src="https://source.unsplash.com/random/1918x900" alt="Phto">
+    <div class="frame"><a href="#">view</a>
+    </div>
+  </div>
+
+  <div class="item big"><img src="https://source.unsplash.com/random/1919x900" alt="Phto">
+    <div class="frame"><a href="#">view</a>
+    </div>
+  </div>
+
+  <div class="item"><img src="https://source.unsplash.com/random/1920x900" alt="Phto">
+    <div class="frame"><a href="#">view</a>
+    </div>
+  </div>
+
+  <div class="item horizontal"><img src="https://source.unsplash.com/random/1921x900" alt="Phto">
+    <div class="frame"><a href="#">view</a>
+    </div>
+  </div>
+
+  <div class="item vertical"><img src="https://source.unsplash.com/random/1922x900" alt="Phto">
+    <div class="frame"><a href="#">view</a>
+    </div>
+  </div>
+
+  <div class="item"><img src="https://source.unsplash.com/random/1923x900" alt="Phto">
+    <div class="frame"><a href="#">view</a>
+    </div>
+  </div>
+
+  <div class="item big"><img src="https://source.unsplash.com/random/1924x900" alt="Phto">
+    <div class="frame"><a href="#">view</a>
+    </div>
+  </div>
+
+  <div class="item"><img src="https://source.unsplash.com/random/1925x900" alt="Phto">
+    <div class="frame"><a href="#">view</a>
+    </div>
+  </div>
+
+  <div class="item"><img src="https://source.unsplash.com/random/1926x900" alt="Phto">
+    <div class="frame"><a href="#">view</a>
+    </div>
+  </div>
+
+  <div class="item big"><img src="https://source.unsplash.com/random/1927x900" alt="Phto">
+    <div class="frame"><a href="#">view</a>
+    </div>
+  </div>
+
+  <div class="item vertical"><img src="https://source.unsplash.com/random/1928x900" alt="Phto">
+    <div class="frame"><a href="#">view</a>
+    </div>
+  </div>
+
+  <div class="item"><img src="https://source.unsplash.com/random/1929x900" alt="Phto">
+    <div class="frame"><a href="#">view</a>
+    </div>
+  </div>
+
+  <div class="item horizontal"><img src="https://source.unsplash.com/random/1930x900" alt="Phto">
+    <div class="frame"><a href="#">view</a>
+    </div>
+  </div>
+
+  <div class="item"><img src="https://source.unsplash.com/random/1931x900" alt="Phto">
+    <div class="frame"><a href="#">view</a>
+    </div>
+  </div>
+
+  <div class="item vertical"><img src="https://source.unsplash.com/random/1932x900" alt="Phto">
+    <div class="frame"><a href="#">view</a>
+    </div>
+  </div>
+
+  <div class="item big"><img src="https://source.unsplash.com/random/1933x900" alt="Phto">
+    <div class="frame"><a href="#">view</a>
+    </div>
+  </div>
+
+  <div class="item horizontal"><img src="https://source.unsplash.com/random/1934x900" alt="Phto">
+    <div class="frame"><a href="#">view</a>
+    </div>
+  </div>
+
+  <div class="item"><img src="https://source.unsplash.com/random/1935x900" alt="Phto">
+    <div class="frame"><a href="#">view</a>
+    </div>
+  </div>
+
+  <div class="item"><img src="https://source.unsplash.com/random/1936x900" alt="Phto">
+    <div class="frame"><a href="#">view</a>
+    </div>
+  </div>
+
+  <div class="item vertical"><img src="https://source.unsplash.com/random/1937x900" alt="Phto">
+    <div class="frame"><a href="#">view</a>
+    </div>
+  </div>
+
+  <div class="item big"><img src="https://source.unsplash.com/random/1938x900" alt="Phto">
+    <div class="frame"><a href="#">view</a>
+    </div>
+  </div>
+
+  <div class="item"><img src="https://source.unsplash.com/random/1939x900" alt="Phto">
+    <div class="frame"><a href="#">view</a>
+    </div>
+  </div>
+
+</div>
+{% schema %}
+  {
+    "name": "Grid Gallery",
+    "settings": [],
+    "presets":[{
+    "name":"Grid Gallery"
+  }]
+    
+  }
+{% endschema %}

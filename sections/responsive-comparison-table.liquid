@@ -1,0 +1,508 @@
+{%- assign id = '#shopify-section-' | append: section.id -%}
+
+<article class="section-padding-{{ section.id }}-padding">
+  {% if section.settings.title != blank or section.settings.subtitle != blank %}
+    <div class="heading_title {{ section.settings.column_alignment_title }}">
+      {% if section.settings.title != blank %}
+        <div class="head_title">
+          <h1>{{ section.settings.title }}</h1>
+        </div>
+      {% endif %}
+      {% if section.settings.subtitle != blank %}
+        <div class="head_sub">{{ section.settings.subtitle }}</div>
+      {% endif %}
+    </div>
+  {% endif %}
+  <ul class="comparison-tables">
+    {% if section.settings.heading_1 %}
+      <li class="bg-purple">
+        <button>{{ section.settings.heading_1 }}</button>
+      </li>
+    {% endif %}
+    {% if section.settings.heading_2 %}
+      <li class="bg-blue">
+        <button>{{ section.settings.heading_2 }}</button>
+      </li>
+    {% endif %}
+    {% if section.settings.heading_3 %}
+      <li class="bg-blue active">
+        <button>{{ section.settings.heading_3 }}</button>
+      </li>
+    {% endif %}
+    {% if section.settings.heading_4 %}
+      <li class="bg-blue">
+        <button>{{ section.settings.heading_4 }}</button>
+      </li>
+    {% endif %}
+  </ul>
+
+  <table>
+    <thead>
+      <tr>
+        <th class="hide always-visible"></th>
+        {% if section.settings.heading_1 %}
+          <th class="bg-purple default">{{ section.settings.heading_1 }}</th>
+        {% endif %}
+        {% if section.settings.heading_2 %}
+          <th class="bg-purple">{{ section.settings.heading_2 }}</th>
+        {% endif %}
+        {% if section.settings.heading_3 %}
+          <th class="bg-purple ">{{ section.settings.heading_3 }}</th>
+        {% endif %}
+        {% if section.settings.heading_4 %}
+          <th class="bg-purple ">{{ section.settings.heading_4 }}</th>
+        {% endif %}
+      </tr>
+    </thead>
+    <tbody>
+      {% for block in section.blocks %}
+        {% case block.type %}
+          {% when 'heading' %}
+            <tr>
+              <td colspan="5" class="sep">{{ block.settings.caption }}</td>
+            </tr>
+          {% when 'data' %}
+            <tr>
+              <td class="always-visible">{{ block.settings.firstcol }}</td>
+              <td>
+                <span class="{% if block.settings.header_1_val == "checked" %}tick{% else %}untick{% endif %}">
+                  {%- if block.settings.header_1_val == 'checked' %}&#10004;{% else %}&#10008;{% endif -%}
+                </span>
+              </td>
+              <td>
+                <span class="{% if block.settings.header_2_val == "checked" %}tick{% else %}untick{% endif %}">
+                  {%- if block.settings.header_2_val == 'checked' %}&#10004;{% else %}&#10008;{% endif -%}
+                </span>
+              </td>
+              <td class="default">
+                <span class="{% if block.settings.header_3_val == "checked" %}tick{% else %}untick{% endif %}">
+                  {%- if block.settings.header_3_val == 'checked' %}&#10004;{% else %}&#10008;{% endif -%}
+                </span>
+              </td>
+              <td>
+                <span class="{% if block.settings.header_4_val == "checked" %}tick{% else %}untick{% endif %}">
+                  {%- if block.settings.header_4_val == 'checked' %}&#10004;{% else %}&#10008;{% endif -%}
+                </span>
+              </td>
+            </tr>
+
+          {% when 'price' %}
+            <tr>
+              <td class="always-visible">{{ block.settings.price_interval }}</td>
+              <td>
+                <span class="txt-top">{{ section.settings.currency }}</span
+                ><span class="txt-l">{{ block.settings.price_1 }}</span>
+              </td>
+              <td>
+                <span class="txt-top">{{ section.settings.currency }}</span
+                ><span class="txt-l">{{ block.settings.price_2 }}</span>
+              </td>
+              <td class="default">
+                <span class="txt-top">{{ section.settings.currency }}</span
+                ><span class="txt-l">{{ block.settings.price_3 }}</span>
+              </td>
+              <td>
+                <span class="txt-top">{{ section.settings.currency }}</span
+                ><span class="txt-l">{{ block.settings.price_4 }}</span>
+              </td>
+            </tr>
+        {% endcase %}
+      {% endfor %}
+    </tbody>
+  </table>
+</article>
+
+{% style %}
+  .section-padding-{{ section.id }}-padding {
+      padding-top: {{ section.settings.padding_top | times: 1 | round: 0 }}px;
+     padding-bottom: {{ section.settings.padding_bottom | times: 1 | round: 0 }}px;
+   }
+   {{ id }} article {
+     width:100%;
+     max-width:1000px;
+     margin:0 auto;
+     height:auto;
+     position:relative;
+   }
+  {{ id }} .center{
+    text-align:center
+  }
+   {{ id }} .heading_title{
+    padding-bottom:30px
+  }
+   {{ id }} ul {
+     display:flex;
+     top:0px;
+     z-index:10;
+     padding-bottom:14px;
+     padding: 0;
+   }
+   {{ id }} li {
+     list-style:none;
+     flex:1;
+   }
+   {{ id }} li:last-child {
+     border-right:1px solid #DDD;
+   }
+   {{ id }} button {
+     width:100%;
+     border: 1px solid #DDD;
+     border-right:0;
+     border-top:0;
+     padding: 10px;
+     background:#FFF;
+     font-size:14px;
+     font-weight:bold;
+     height:60px;
+     color:#999
+   }
+   {{ id }} li.active button {
+     background:#F5F5F5;
+     color:#000;
+   }
+   {{ id }} table { border-collapse:collapse; table-layout:fixed; }
+   {{ id }} th { background:{{section.settings.tablecolor}}; display:none;color:{{section.settings.tableheadingcolor}} }
+   {{ id }} td, {{ id }} th {
+     height:53px
+   }
+  {{id}} td {
+    color:{{section.settings.tabletextcolor}}
+  }
+   {{ id }} td,{{ id }} th { border:1px solid #DDD; padding:10px; empty-cells:show; }
+   {{ id }} td,{{ id }} th {
+     text-align:left;
+
+   }
+   td+td, th+th {
+     text-align:center;
+     display:none;
+   }
+   td.default {
+     display:table-cell;
+   }
+   .bg-purple {
+     border-top:3px solid #A32362;
+   }
+   .bg-blue {
+     border-top:3px solid #0097CF;
+   }
+   {{ id }} .sep {
+     background:{{section.settings.tablecolor}};
+     font-weight:bold;
+     color:{{section.settings.tableheadingcolor}}
+   }
+   {{ id }} .untick {
+     font-size:18px;
+       color: #d72700;
+   }
+   {{ id }} .txt-l { font-size:28px; font-weight:bold; }
+   {{ id }} .txt-top { position:relative; top:-9px; left:-2px; }
+   {{ id }} .tick { font-size:18px; color:#2CA01C; }
+   {{ id }} .hide {
+     border:0;
+     background:none;
+   }
+
+   @media screen and (max-width:640px){
+     {{ id }} td,{{ id }} th {
+     text-align:left;
+     width: 25%;
+   }
+
+   }
+   @media (min-width: 640px) {
+    {{ id }} ul {
+       display:none;
+     }
+    {{ id }} td,{{ id }} th {
+       display:table-cell !important;
+     }
+     {{ id }} td.always-visible,{{ id }} th.always-visible{
+         width: 300px;
+     }
+     {{ id }} table {width:100% }
+     {{ id }} td,{{ id }} th {
+       width: 15%;
+
+     }
+     td+td, th+th {
+       width: auto;
+     }
+   }
+{% endstyle %}
+
+<script>
+  document.querySelector('ul.comparison-tables').addEventListener('click', function(event) {
+    if (event.target.tagName === 'LI' || event.target.tagName === 'BUTTON') {
+      var li = event.target.tagName === 'LI' ? event.target : event.target.parentElement;
+      var pos = Array.from(li.parentElement.children).indexOf(li) + 2;
+
+      document.querySelectorAll('tr td:not(:first-child)').forEach(function(td) {
+        td.style.display = 'none';
+      });
+
+      document.querySelectorAll('td:nth-child(' + pos + ')').forEach(function(td) {
+        td.style.display = 'table-cell';
+      });
+
+      document.querySelectorAll('tr th:not(:first-child)').forEach(function(th) {
+        th.style.display = 'none';
+      });
+
+      document.querySelectorAll('li').forEach(function(item) {
+        item.classList.remove('active');
+      });
+
+      li.classList.add('active');
+    }
+  });
+</script>
+{% schema %}
+{
+  "name": "Comparison Table",
+  "settings": [
+     {
+      "type": "text",
+      "id": "title",
+      "default": "Title goes in here",
+      "label": "Title",
+      "info": "Heading Text"
+    },
+      {
+      "type": "text",
+      "id": "subtitle",
+      "default": "SubTitle goes in here",
+      "label": "Sub Title",
+      "info": "Subtitle text"
+    },
+     {
+      "type": "select",
+      "id": "column_alignment_title",
+      "options": [
+        {
+          "value": "left",
+          "label": "Left"
+        },
+        {
+          "value": "center",
+          "label": "Center"
+        }
+      ],
+      "default": "left",
+      "label": "Left"
+    },
+      {
+          "type": "color",
+          "id": "tablecolor",
+          "default": "#f2f2f2",
+          "label": "Table Background Color"
+        },
+     {
+          "type": "color",
+          "id": "tableheadingcolor",
+          "default": "#000000",
+          "label": "Table Heading Color"
+        },
+        {
+          "type": "color",
+          "id": "tabletextcolor",
+          "default": "#000000",
+          "label": "Table Text Color"
+        },
+    {
+      "type": "text",
+      "id": "currency",
+      "default": "$",
+      "label": "Currency",
+      "info": "Enter the Currency"
+    },
+     {
+      "type": "text",
+      "id": "heading_1",
+      "default": "Heading 1",
+      "label": "Heading 1",
+      "info": "Headers of the comparison Table"
+    },
+    {
+      "type": "text",
+      "id": "heading_2",
+      "default": "Heading 2",
+      "label": "Heading 2",
+      "info": "Headers of the comparison Table"
+    },
+    {
+      "type": "text",
+      "id": "heading_3",
+      "default": "Heading 3",
+      "label": "Heading 3",
+      "info": "Headers of the comparison Table"
+    },
+    {
+      "type": "text",
+      "id": "heading_4",
+      "default": "Heading 4",
+      "label": "Heading 4",
+      "info": "Headers of the comparison Table"
+    },
+    {
+      "type": "text",
+      "id": "heading_5",
+      "default": "Heading 5",
+      "label": "Heading 5",
+      "info": "Headers of the comparison Table"
+    },
+      {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding Top",
+      "default": 36
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding Bottom",
+      "default": 36
+    }
+  ],
+  "blocks": [
+    {
+      "type": "heading",
+      "name": "Heading",
+      "settings": [
+        {
+          "type": "text",
+          "id": "caption",
+          "default": "Add a tagline",
+          "label": "t:sections.image-with-text.blocks.caption.settings.text.label"
+        }
+      ]
+    },
+    {
+      "type": "price",
+      "name": "Price",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "text",
+          "id": "price_interval",
+          "default": "Monthly",
+          "label": "Add Price Interval(Monthly/Yearly)"
+        },
+         {
+          "type": "text",
+          "id": "price_1",
+          "default": "10",
+          "label": "Add Price in Your Currency for Header 1"
+        },
+         {
+          "type": "text",
+          "id": "price_2",
+          "default": "10",
+          "label": "Add Price in Your Currency for Header 2"
+        },
+         {
+          "type": "text",
+          "id": "price_3",
+          "default": "10",
+          "label": "Add Price in Your Currency for Header 3"
+        },
+         {
+          "type": "text",
+          "id": "price_4",
+          "default": "10",
+          "label": "Add Price in Your Currency for Header 4"
+        }
+      ]
+    },
+    {
+      "type": "data",
+      "name": "Data",
+      "settings": [
+        {
+          "type": "text",
+          "id": "firstcol",
+          "default": "Data Text",
+          "label": "Data Text"
+        },
+        {
+          "type": "radio",
+          "id": "header_1_val",
+          "label": "Select First Header value alignment",
+          "options": [
+            {
+              "value": "checked",
+              "label": "Checked"
+            },
+            {
+              "value": "unchecked",
+              "label": "Unchecked"
+            }
+          ],
+          "default": "checked"
+        },
+        {
+          "type": "radio",
+          "id": "header_2_val",
+          "label": "Select First Header value alignment",
+          "options": [
+            {
+              "value": "checked",
+              "label": "Checked"
+            },
+            {
+              "value": "unchecked",
+              "label": "Unchecked"
+            }
+          ],
+          "default": "checked"
+        },
+        {
+          "type": "radio",
+          "id": "header_3_val",
+          "label": "Select First Header value alignment",
+          "options": [
+            {
+              "value": "checked",
+              "label": "Checked"
+            },
+            {
+              "value": "unchecked",
+              "label": "Unchecked"
+            }
+          ],
+          "default": "checked"
+        },
+        {
+          "type": "radio",
+          "id": "header_4_val",
+          "label": "Select First Header value alignment",
+          "options": [
+            {
+              "value": "checked",
+              "label": "Checked"
+            },
+            {
+              "value": "unchecked",
+              "label": "Unchecked"
+            }
+          ],
+          "default": "checked"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Responsive Comparison Table"
+    }
+  ]
+}
+{% endschema %}

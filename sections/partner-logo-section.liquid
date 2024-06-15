@@ -1,0 +1,286 @@
+{% style %}
+  .partner_logo_section .partner_logo .section_heading {
+  	width:100%;
+  	max-width:1350px;
+  	margin:0 auto;
+  	padding:80px 30px;
+  }
+    .partner_logo_section {
+  	width:100%;
+  	max-width:1350px;
+  	margin:0 auto;
+  }
+  @media screen and (max-width:1400px) and (min-width:768px) {
+  	.partner_logo_section .partner_logo .section_heading {
+  		padding:80px 30px;
+  	}
+  }
+  @media screen and (max-width:767px) {
+  	.partner_logo_section .partner_logo .section_heading {
+  		padding:70px 25px 25px;
+  	}
+  }
+  .partner_logo_section .partner_logo .section_heading h2 {
+  	font-style:normal;
+  	font-weight:400;
+  	font-size:42px;
+  	line-height:56px;
+  	text-align:center;
+  	color:#000000;
+  	margin:0 0 28px;
+  }
+  @media screen and (max-width:767px) {
+  	.partner_logo_section .partner_logo .section_heading h2 {
+  		font-size:30px;
+  		line-height:48px;
+  		margin:0 0 20px;
+  	}
+  }
+  .partner_logo_section .partner_logo .section_heading h2 strong {
+  	font-weight:600;
+  }
+  .partner_logo_section .partner_logo .section_heading .description p {
+  	font-weight:400;
+  	font-size:20px;
+  	line-height:33px;
+  	text-align:center;
+  	color:#000000;
+  	margin:0;
+  }
+  @media screen and (max-width:767px) {
+  	.partner_logo_section .partner_logo .section_heading .description p {
+  		font-size:14px;
+  		line-height:24px;
+  	}
+  }
+  .partner_logo_section .partner_logo .logo_list {
+  	width:calc(100% - 120px);
+  	margin:0 auto;
+  	position:relative;
+  }
+  @media screen and (max-width:1400px) and (min-width:768px) {
+  	.partner_logo_section .partner_logo .logo_list {
+  		width:calc(100% - 60px);
+  	}
+  }
+  @media screen and (max-width:767px) {
+  	.partner_logo_section .partner_logo .logo_list {
+  		width:100%;
+  	}
+  }
+  .partner_logo_section .partner_logo .logo_list .center_logo {
+  	position:absolute;
+  	top:50%;
+  	left:50%;
+  	transform:translate(-50%,-50%);
+  	width:100%;
+  	max-width:365px;
+  	z-index:1;
+  }
+
+  @media screen and (max-width:1920px) and (min-width:1201px) {
+  	.partner_logo_section .partner_logo .logo_list .center_logo {
+  		max-width:{{section.settings.logo_width}};
+  	}
+  }
+  @media screen and (max-width:1200px) {
+  	.partner_logo_section .partner_logo .logo_list .center_logo {
+  		max-width:180px;
+  	}
+  }
+  @media screen and (max-width:360px) {
+  	.partner_logo_section .partner_logo .logo_list .center_logo {
+  		max-width:100px;
+  	}
+  }
+  .partner_logo_section .partner_logo .logo_list .center_logo img {
+  	width:100%;
+    height: auto;
+  }
+  .partner_logo_section .partner_logo .logo_list .logos {
+  	display:flex;
+  	flex-wrap:wrap;
+  	align-items:center;
+  	border-left:1px solid #0000001a;
+  	border-top:1px solid #0000001a;
+  	overflow:hidden;
+  }
+  @media screen and (max-width:767px) {
+  	.partner_logo_section .partner_logo .logo_list .logos {
+  		border-radius:unset;
+  	}
+  }
+  .partner_logo_section .partner_logo .logo_list .logos .block_logos {
+  	width:20%;
+  	border-bottom:1px solid #0000001a;
+  	border-right:1px solid #0000001a;
+  }
+  @media screen and (min-width:768px) {
+  	.partner_logo_section .partner_logo .logo_list .logos .block_logos:nth-child(1) {
+  		border-radius:16px 0 0 0;
+  	}
+  }
+  @media screen and (min-width:768px) {
+  	.partner_logo_section .partner_logo .logo_list .logos .block_logos:nth-child(5) {
+  		border-radius:0 16px 0 0;
+  	}
+  }
+  @media screen and (max-width:767px) {
+  	.partner_logo_section .partner_logo .logo_list .logos .block_logos {
+  		width:33.33%;
+  	}
+  }
+  .partner_logo_section .partner_logo .logo_list .logos .block_logos .images {
+  	position:relative;
+  	padding-top:54%;
+  	max-width:150px;
+  	margin:0 auto;
+  }
+  @media screen and (max-width:1024px) and (min-width:768px) {
+  	.partner_logo_section .partner_logo .logo_list .logos .block_logos .images {
+  		max-width:100px;
+  	}
+  }
+  @media screen and (max-width:767px) {
+  	.partner_logo_section .partner_logo .logo_list .logos .block_logos .images {
+  		padding-top:73%;
+  		max-width:90px;
+  	}
+  }
+  @media screen and (max-width:360px) {
+  	.partner_logo_section .partner_logo .logo_list .logos .block_logos .images {
+  		max-width:75px;
+  	}
+  }
+  .partner_logo_section .partner_logo .logo_list .logos .block_logos .images img {
+  	width:100%;
+  	position:absolute;
+  	top:0;
+  	left:0;
+  	right:0;
+  	bottom:0;
+  	max-width:100%;
+  	height:100%;
+  	object-fit:contain;
+  	margin: 0 auto;
+  }
+{% endstyle %}
+<div class="partner_logo_section ">
+  <div class="container">
+    <div class="partner_logo">
+      <div class="container_content">
+        <div class="section_heading">
+          <h2>{{ section.settings.title }}</h2>
+
+          <div class="description">
+            {{ section.settings.subtitle }}
+          </div>
+        </div>
+      </div>
+      <div class="logo_list">
+        <div class="center_logo aos-init aos-animate" data-aos="fade-zoom-in" data-aos-delay="100">
+          {{ section.settings.image | image_url: width: section.settings.logo_width | image_tag }}
+        </div>
+
+        <div class="logos">
+          {% for block in section.blocks %}
+            <div class="block_logos ">
+              <div class="images aos-init aos-animate" data-aos="fade-zoom-in" data-aos-delay="{{ forloop.index }}00">
+                {{ block.settings.image | image_url: width: 300 | image_tag }}
+              </div>
+            </div>
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% schema %}
+{
+  "name": "Partner Logo Section",
+  "settings": [
+  {
+    "type": "inline_richtext",
+    "id": "title",
+    "label": "Title",
+    "default": "Partner Title Text"
+  },
+  {
+    "type": "richtext",
+    "id": "subtitle",
+    "label": "Subtext",
+    "default": "<p>Paragraph</p>"
+  },
+      {
+        "type": "image_picker",
+        "id": "image",
+        "label": "Center Image"
+      },
+  {
+    "type": "select",
+    "id": "logo_width",
+    "label": "Logo width",
+    "default": "280px",
+    "options": [
+
+      {
+        "label": "Small",
+        "value": "150px"
+      },
+      {
+        "label": "Medium",
+        "value": "200px"
+      },
+      {
+        "label": "Large",
+        "value": "280px"
+      },
+      {
+        "label": "Extra Large",
+        "value": "400px"
+      }
+    ]
+  },
+  {
+    "type": "range",
+    "id": "padding_top",
+    "min": 0,
+    "max": 100,
+    "step": 2,
+    "default": 20,
+    "label": "Padding top"
+  },
+  {
+    "type": "range",
+    "id": "padding_bottom",
+    "min": 0,
+    "max": 100,
+    "step": 2,
+    "default": 20,
+    "label": "Padding bottom"
+  }
+],
+  "blocks": [
+    {
+    "type": "logo_image",
+    "name": "Logo",
+    "settings": [
+      {
+        "type": "image_picker",
+        "id": "image",
+        "label": "Image"
+      },
+      {
+        "type": "url",
+        "id": "link",
+        "label": "Link",
+        "info": "Optional"
+      }
+    ]
+  }
+  ],
+  "presets": [{
+    "name": "Partner Logo Section"
+  }]
+}
+{% endschema %}

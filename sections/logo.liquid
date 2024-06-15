@@ -1,0 +1,148 @@
+<div class="logoList--container page-width" style="padding-top: {{ section.settings.padding_top | append: "px" }}; padding-bottom: {{ section.settings.padding_bottom | append: "px" }}">
+
+  <ul>
+  <li class="logoList--item titles">{{ section.settings.title | escape }}</li>
+    {%- for block in section.blocks -%}
+      <li class="logoList--item" {{ block.shopify_attributes }}>
+        {%- if block.settings.link != blank -%}
+          <a href="{{ block.settings.link }}">
+        {%- endif -%}
+          {%- if block.settings.image != blank -%}
+            {{ block.settings.image | img_url: '160x160', scale: 2 | img_tag: block.settings.image.alt }}
+          {%- else -%}
+            {{ 'logo' | placeholder_svg_tag: 'placeholder-svg' }}
+          {%- endif -%}
+        {%- if block.settings.link != blank -%}
+          </a>
+        {%- endif -%}
+      </li>
+    {%- endfor -%}
+  </ul>
+
+</div>
+<style>
+   #shopify-section-{{ section.id }} .logoList--container {
+    padding-top: 20px;
+    padding-bottom: 20px;
+    margin: auto;
+  }
+ #shopify-section-{{ section.id }} li.logoList--item.titles {
+    max-width: 180px;
+    font-style: italic;
+}
+ #shopify-section-{{ section.id }} .logoList--container ul {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 1rem;
+    justify-content: center;
+    align-items: center;
+}
+  
+   #shopify-section-{{ section.id }} .logoList--item{
+    display: inline-block;
+    max-width: {{ section.settings.logo_width }};
+  }
+
+   #shopify-section-{{ section.id }} .logoList--item img{
+    width: 100%;
+   }
+</style>
+
+{% schema %}
+{
+  "name": "Logo list",
+  "settings": [
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Heading",
+      "default": "Logo list"
+    },
+    {
+      "type": "select",
+      "id": "logo_width",
+      "label": "Logo width",
+      "default": "160px",
+      "options": [
+        {
+          "label": "Extra Small",
+          "value": "50px"
+        },
+        {
+          "label": "Small",
+          "value": "100px"
+        },
+        {
+          "label": "Medium",
+          "value": "160px"
+        },
+        {
+          "label": "Large",
+          "value": "200px"
+        },
+        {
+          "label": "Extra Large",
+          "value": "400px"
+        }
+      ]
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 100,
+      "step": 2,
+      "default": 20,
+      "label": "Padding top"
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 2,
+      "default": 20,
+      "label": "Padding bottom"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "logo_image",
+      "name": "Logo",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Image"
+        },
+        {
+          "type": "url",
+          "id": "link",
+          "label": "Link",
+          "info": "Optional"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Logo list",
+      "category": "Image",
+      "blocks": [
+        {
+          "type": "logo_image"
+        },
+        {
+          "type": "logo_image"
+        },
+        {
+          "type": "logo_image"
+        },
+        {
+          "type": "logo_image"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

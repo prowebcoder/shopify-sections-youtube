@@ -1,0 +1,39 @@
+<!-- Font Awesome -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<style>
+  .stars-outer::before {
+    content: "\2606 \2606 \2606 \2606 \2606";
+     font-size:20px
+  }
+  .stars-outer {
+    display: inline-block;
+    position: relative;
+     font-size:20px;
+    font: normal normal normal 14px/1 FontAwesome;
+  }
+  .stars-inner {
+    position: absolute;
+    top: 0;
+    left: 0;
+    white-space: nowrap;
+    overflow: hidden;
+    width: 0;
+  }
+   .stars-inner::before {
+     content: "\2605 \2605 \2605 \2605 \2605";
+    color: #f8ce0b;
+     font-size:20px
+  }
+</style>
+
+
+<!-- JavaScript for updating total rating -->
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+const ratings{{id}} = {{ratingValue}}
+const starTotal{{id}} = 5;
+const starPercentage{{id}} = (ratings{{id}} / starTotal{{id}}) * 100;
+const starPercentageRounded{{id}} = `${(Math.round(starPercentage{{id}} / 10) * 10)}%`;
+document.querySelector(`#reviews-{{ id }} .stars-inner`).style.width = starPercentageRounded{{id}}; 
+        });
+</script>

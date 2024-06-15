@@ -1,0 +1,77 @@
+<link rel="stylesheet" href="{{ 'flickity.css' | asset_url }}">
+<script src="{{ 'flickity.pkgd.min.js' | asset_url }}" async></script>
+<div class="page-width section-{{ section.id }}-padding">
+  <div class="carousel" data-flickity='{ "groupCells": true ,"freeScroll": true, "wrapAround": true, "autoPlay": true}'>
+    {% for block in section.blocks %}
+      <div class="carousel-cell">
+        <div class="card-wrapper-icons">
+          <div class="card-image">{{ block.settings.image | image_url: width: 60 | image_tag }}</div>
+          <div class="card-sub">{{ block.settings.label }}</div>
+          <div class="card-main">{{ block.settings.description }}</div>
+        </div>
+      </div>
+    {% endfor %}
+  </div>
+</div>
+
+{% style %}
+.section-{{ section.id }}-padding {
+padding-top: {{ section.settings.padding_top | times: 1 | round: 0 }}px;
+padding-bottom: {{ section.settings.padding_bottom | times: 1 | round: 0 }}px;
+}
+.section-{{ section.id }}-padding .carousel-cell {
+width: 20%;
+height: 350px;
+margin-right: 10px;
+border-radius: 5px;
+text-align:{{section.settings.column_alignment}}
+} 
+.carousel-cell:before {
+display: block;
+text-align: center;
+line-height: 200px;
+font-size: 80px;
+color: white;
+}
+.flickity-enabled.is-draggable .flickity-viewport.is-pointer-down {
+cursor: -webkit-grabbing;
+cursor: grabbing;
+box-shadow: none;
+}
+{% endstyle %}
+{% schema %}
+{
+  "name": "Slider Carousel",
+  "settings": [],
+  "blocks": [
+  {
+    "type": "Content",
+    "name": "Content",
+    "settings": [
+      {
+        "type": "image_picker",
+        "id":"image",
+        "label":"Choose an Image"
+      },
+      {
+        "type": "text",
+        "id": "label",
+        "default": "I am Empty",
+        "label": "Write Some Text"
+      },
+      {
+        "type": "text",
+        "id": "description",
+        "default": "description",
+        "label": "Description"
+      }
+    ]
+  }
+],
+  "presets": [
+    {
+      "name": "Slider Carousel"
+    }
+  ]
+}
+{% endschema %}

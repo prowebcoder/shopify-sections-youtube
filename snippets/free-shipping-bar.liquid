@@ -1,0 +1,170 @@
+<div class="cart-shipping__wrapper">
+
+	<div class="cart-outer-ship-icons">
+
+      {% if settings.show_free_shipping_1%}
+		<span>
+		<div class="text_free_shipping">
+			{{ settings.free_shipping_text_1 }}
+		</div>
+		<div class="svg_icons" id="icon_free_shipping">
+			{{ settings.free_shipping_image_1  |img_url | img_tag}}
+		</div>
+		</span>
+
+        {% endif %}
+		 {% if settings.show_free_shipping_2%}
+		<span>
+		<div class="text_free_shipping">
+			{{ settings.free_shipping_text_2 }}
+		</div>
+		<div class="svg_icons " id="icon_wallet">
+			{{ settings.free_shipping_image_2   | img_url | img_tag}}
+		</div>
+		</span>
+           {% endif %}
+		 {% if settings.show_free_shipping_3%}
+		<span>
+		<div class="text_free_shipping">
+			{{ settings.free_shipping_text_3 }}
+		</div>
+		<div class="svg_icons" id="icon_cards">
+			{{ settings.free_shipping_image_3   | img_url | img_tag }}
+		</div>
+		</span>
+		{% endif %}
+	</div>
+	<div class="cart-shippingThreshold__bar">
+		<span class="cart-shippingThreshold__progress"></span>
+	</div>
+	<p class="cart-shipping__numOuter">
+		You're $<span class="cart-shipping__num"></span> away from free shipping!
+	</p>
+	<p class="cart-shipping__success" style="display:none">
+		You're eligible for Free Shipping!
+	</p>
+</div>
+
+<script>
+// Calculate the progress number, and the width of the progress bar.
+function calculateProgress(currentVal) {
+  var progressBar = document.querySelectorAll('.cart-shippingThreshold__progress');
+  var progressNum = document.querySelectorAll('.cart-shipping__num');
+  var targetVal = {{settings.free_shipping_limit}};
+  var progressOuter = document.querySelectorAll('.cart-shipping__numOuter');
+  var successMsg = document.querySelectorAll('.cart-shipping__success');
+  // calculate how far progress is from the total as a percentage
+  var result = Math.round(100 * currentVal / targetVal);
+  progressBar.forEach(function(el){
+    el.setAttribute('style', "width: ".concat(result, "%"));
+   
+    if (result >= 18 && result <= 36){
+      document.querySelector('#icon_free_shipping').style.background = '#000000';
+    }
+      if (result >= 36 && result <= 56){
+      document.querySelector('#icon_free_shipping').style.background = '#000000';
+      document.querySelector('#icon_wallet').style.background = '#000000';
+    }
+      if (result >= 56 && result <= 80){
+        document.querySelector('#icon_free_shipping').style.background = '#000000';
+      document.querySelector('#icon_wallet').style.background = '#000000';
+    
+    }
+     if (result >= 85 && result <= 15000){
+         document.querySelector('#icon_free_shipping').style.background = '#000000';
+      document.querySelector('#icon_wallet').style.background = '#000000';
+      document.querySelector('#icon_cards').style.background = '#000000';
+     
+    }
+  })
+   // Update the progess text. If threshold is met, show success message
+  var newProgressNum = (targetVal - currentVal) / 100;
+  if(newProgressNum <= 0){
+    successMsg.forEach(function(el){
+     // el.style.display = 'block';
+    });
+    progressOuter.forEach(function(el){
+     el.textContent = "You're eligible for Free Shipping!";
+    });
+    progressNum.forEach(function(el){
+      el.textContent = newProgressNum;
+    });
+  } else {
+    successMsg.forEach(function(el){
+      el.style.display = 'none';
+    });
+    progressOuter.forEach(function(el){
+      el.style.display = 'block';
+    });
+    progressNum.forEach(function(el){
+      el.textContent = newProgressNum;
+    });
+  }
+};
+// In your theme's main JS file, find each ajax call where your store adds to, deletes from, and updates the cart. Put this in the success function of each. 
+// NOTE: If you make this ajax request outside of the functions that update the cart, the calculator won't sync with the current cart state without refreshing the page. You need to specify that you want to read the current cart data AFTER the new items are added/removed.
+ 
+</script>
+
+<style>
+/*  Style the progress bar  */
+.cart-shipping__wrapper {
+  padding: 0 15px;
+  max-width: 700px;
+  margin: 0 auto;
+}
+.cart-shippingThreshold__bar {
+    position: relative;
+    background-color: #d8d8d8;
+    height: 1rem;
+    margin-top: -34px;
+      border-radius: 10px;
+}
+.cart-shipping__numOuter,.cart-shipping__success {
+    margin-top: 45px;
+    text-align: center;
+}
+.cart-shippingThreshold__progress {
+  position: absolute;
+  top: 0;
+  left: 0;
+  min-width: 0;
+  max-width: 100%;
+  height: 100%;
+  display: block;
+  /*  Progress bar fill color  */
+  background-color: #000000; 
+  border-radius: 10px;
+}
+.cart-outer-ship-icons span {
+    width: 64px;
+    text-align: center;
+    font-size: 12px;
+}
+ .text_free_shipping {
+    font-size: 12px;
+    width: 45px;
+    margin: 0 auto;
+}
+.cart-outer-ship-icons {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-around;
+    z-index: 999;
+    position: relative;
+}
+  .svg_icons {
+    background: #ccc;
+    border-radius: 33px;
+    width: 62px;
+    height: 62px;
+    display: flex;
+    align-content: center;
+    align-items: center;
+    justify-content: center;
+}
+ .svg_icons svg {
+    padding: 5px;
+}
+</style>

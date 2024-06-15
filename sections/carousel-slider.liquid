@@ -1,0 +1,302 @@
+<script src="https://unpkg.com/flickity@2/dist/flickity.pkgd.min.js"></script>
+<link rel="stylesheet" href="https://unpkg.com/flickity@2/dist/flickity.min.css">
+{%- assign id = '#shopify-section-' | append: section.id -%}
+{% comment %}
+* Make sure you have the Flickity plugin installed and the proper license for this to function on your store
+* Plugin, licensing and documentation at https://flickity.metafizzy.co/
+{% endcomment %}
+
+{% assign cell_align = section.settings.cell_align %}
+{% assign wrap_around = section.settings.wrap_around %}
+{% assign img_width = section.settings.img_width | append: 'x' %}
+
+<div class="flickity-section-{{ section.id }} flickity-index-slider collection " style="background-color: {{ section.settings.bg }};padding-bottom: 70px;">
+<div class="page-width">
+
+  <div  class="main-wrapper">
+<div>
+<p class="text-title text-center" style="margin-bottom:{{ section.settings.title_mb }}px">{{ section.settings.title }}</p>
+</div>
+  <div class="embla-product-container"><div class="embla_product-image">{{ section.settings.product.images[0].src | image_url: width: 400 | image_tag }}</div><div class="btn"><a href="{{ section.settings.product.url }}">Shop</a></div></div>
+   
+<div class="flickity-section__carousel carousel-{{section.id }} text-center"
+data-flickity='{
+"cellAlign": "{{ cell_align }}",
+"pageDots": false,
+"freeScroll": true,
+"contain": true,
+"wrapAround": {{ wrap_around }}
+}'>
+      
+
+
+{%- for block in section.blocks -%}
+  <div class="carousel__cell" style="width:{{ section.settings.cell_width }};margin-right:{{ section.settings.mr }}px">
+     {%- if block.settings.text != blank -%}
+                  <div class="rte">{{ block.settings.text }}</div>
+                {%- endif -%}
+                {%- if block.settings.title != blank -%}
+                  <h3>{{ block.settings.title | escape }}</h3>
+                {%- endif -%}
+  </div>
+{%- endfor -%}
+</div>
+</div>
+</div>
+</div>
+<style>
+
+  
+   {{ id }} .main-wrapper{
+    position: relative;
+         width: 1210px;
+    margin: 50px auto;
+  }
+.embla-product-container {
+    position: absolute;
+    background: #000;
+    height: 400px;
+    z-index: 99;
+    border: 1px solid #000;
+    overflow: hidden;
+      border-radius: 30px;
+    left: auto;
+    width: 30.9%;
+}
+  .flickity-enabled:focus {
+    outline: 0;
+    box-shadow: none;
+}
+.flickity-section-{{ section.id }} .page-width{
+   
+    position: relative;
+}
+ .embla-product-container .btn {
+    z-index: 9999;
+    position: absolute;
+    bottom: 20px;
+    margin: 0 auto;
+    display: table;
+    left: 0;
+    right: 0;
+}
+  .embla_product-image img {
+    margin: 0 auto;
+    display: table;
+    width: 100%;
+}
+  .embla-product-container .btn a {
+    text-decoration: none;
+    background: #000;
+    padding: 6px 30px;
+    border-radius: 30px;
+    color: #fff;
+}
+  .carousel__cell {
+    height: 400px;
+    padding: 5px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+    border: 1px solid #000;
+    border-radius: 33px;
+}
+  .carousel__cell p {
+    font-size: 14px;
+}
+  .flickity-viewport {
+   
+    border-radius: 30px;
+}
+  .flickity-prev-next-button.next {
+    right: -70px;
+}
+  .flickity-prev-next-button.previous {
+    left: -70px;
+}
+  @media screen and (max-width:768px){
+    .carousel__cell {
+  
+    width: 100% !important;
+}
+    .embla-product-container {
+    position: relative;
+    background: #000;
+    height: 400px;
+    z-index: 99;
+    border: 1px solid #000;
+    overflow: hidden;
+      border-radius: 30px;
+    left: auto;
+    width: 100%;
+}
+    {{ id }} .main-wrapper{
+    position: relative;
+         width: 100%;
+    margin: 50px auto;
+  }
+     .flickity-prev-next-button.next {
+    right: 10px;
+}
+  .flickity-prev-next-button.previous {
+    left: 10px;
+}
+  }
+</style>
+{% schema %}
+{
+"name": "Carousel Slider",
+"settings": [
+{
+"type": "color",
+"id": "bg",
+"label": "Background Color"
+},
+      {
+        "type":"product",
+         "id": "product",
+          "label": "Select Product"
+      },
+{
+"type": "text",
+"id": "title",
+"label": "Title",
+"default": "Featured Collection Slider"
+},
+{
+  "type": "select",
+  "id": "image_ratio",
+  "options": [
+    {
+      "value": "adapt",
+      "label": "t:sections.collection-list.settings.image_ratio.options__1.label"
+    },
+    {
+      "value": "portrait",
+      "label": "t:sections.collection-list.settings.image_ratio.options__2.label"
+    },
+    {
+      "value": "square",
+      "label": "t:sections.collection-list.settings.image_ratio.options__3.label"
+    }
+  ],
+  "default": "square",
+  "label": "t:sections.collection-list.settings.image_ratio.label",
+  "info": "t:sections.collection-list.settings.image_ratio.info"
+},
+{
+"type": "select",
+"id": "cell_align",
+"label": "Slide Alignment",
+"options": [
+{
+"value": "center",
+"label": "Center"
+},
+{
+"value": "left",
+"label": "Left"
+},
+  {
+"value": "right",
+"label": "right"
+}
+],
+"default": "center"
+},
+{
+"type": "range",
+"id": "title_mb",
+"min": 30,
+"max": 120,
+"step": 1,
+"unit": "px",
+"label": "Title Margin Bottom",
+"default": 48
+},
+{
+"type": "select",
+"id": "cell_width",
+"label": "Choose number of slides to show on start",
+"options": [
+{
+"value": "33.33%",
+"label": "Three"
+},
+{
+"value": "25%",
+"label": "Four"
+},
+{
+"value": "20%",
+"label": "Five"
+},
+{
+"value": "16.6666667%",
+"label": "Six"
+},
+{
+"value": "12.5%",
+"label": "Eight"
+}
+],
+"default": "25%"
+},
+{
+"type": "radio",
+"id": "wrap_around",
+"label": "Enable Wrap Around (endless scrolling)",
+"options": [
+{
+"value": "true",
+"label": "True"
+},
+{
+"value": "false",
+"label": "False"
+}
+],
+"default": "true"
+},
+{
+"type": "range",
+"id": "mr",
+"min": 0,
+"max": 48,
+"step": 1,
+"unit": "px",
+"label": "Cell Margin Right",
+"default": 16,
+"info": "Save page to see changes."
+}
+],
+    "blocks":[
+      {
+        "type":"carousel",
+        "name":"Carousel Item",
+        "settings": [ 
+          {
+          "type": "text",
+          "id": "title",
+          "default": "Full Name",
+          "label": "Customer"
+        },
+        {
+          "type": "richtext",
+          "id": "text",
+          "default": "<p>Pair text with an image to focus on your chosen product, collection, or blog post. Add details on availability, style, or even provide a review.</p>",
+          "label": "Feedback"
+        }
+        ]
+      }
+    ],
+"presets": [
+{
+"name": "Carousel Slider",
+"category": "Slider"
+}
+]
+}
+{% endschema %}

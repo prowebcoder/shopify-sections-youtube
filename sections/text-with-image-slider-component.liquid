@@ -1,0 +1,528 @@
+{% assign id = '#shopify-section-' | append: section.id %}
+{% style %}
+  {{ id }} .block-test-drive-our-services-post {
+      width: 100%;
+      position: absolute;
+      top: 0;
+      left: 0;
+      transition: transform 0.5s ease;
+  }
+    .section-{{ section.id }}-padding {
+    padding-top: {{ section.settings.padding_top | times: 0.75 | round: 0 }}px;
+    padding-bottom: {{ section.settings.padding_bottom | times: 0.75 | round: 0 }}px;
+  }
+{{ id }} .block-test-drive-inner {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    border-radius: 16px;
+    overflow: hidden;
+    position: relative;
+    justify-content: space-between;
+    width: 100%;
+  padding: 20px;
+}
+  {{ id }} .block-test-drive-our-services {
+      padding: 0 0 120px;
+  }
+
+  {{ id }} .block-test-drive-our-services-box {
+      display: flex;
+      align-items: center;
+      flex-wrap: wrap;
+      border-radius: 16px;
+      overflow: hidden;
+      position: relative;
+    width:{{section.settings.custom_width}}%;
+    max-width:1440px;
+    margin: 0 auto;
+  }
+
+  {{ id }} .block-test-drive-our-services-details-box {
+      width: 42%;
+      padding: 40px 40px 40px 50px;
+  }
+
+  {{ id }} .block-test-drive-our-services-heading {
+      color: #000;
+      font-size: 52px;
+      font-weight: 600;
+      line-height: 70px;
+      margin: 0 0 20px;
+  }
+
+  {{ id }} .block-test-drive-our-services-heading span {
+      position: relative;
+      display: inline-block;
+  }
+
+  {{ id }} .block-test-drive-our-services-heading span:after {
+      content: "";
+      display: block;
+      background-image: url(/cdn/shop/files/new-lines.png?v=1702640923);
+      position: absolute;
+      background-size: contain;
+      background-repeat: no-repeat;
+      width: 100%;
+      height: 10px;
+      bottom: 0;
+      background-position: right;
+      right: 0;
+  }
+
+  {{ id }} .block-test-drive-our-services-description p {
+      color: #000c;
+      font-size: 16px;
+      font-weight: 400;
+      line-height: 31px;
+      margin: 0 0 21px;
+  }
+  {{ id }}.block_test-drive-our-services-heading span:after {
+      content: "";
+      display: block;
+      background-image: url(https://cdn.shopify.com/s/files/1/0556/1109/7155/files/new-lines.png?v=1717069435);
+      position: absolute;
+      background-size: contain;
+      background-repeat: no-repeat;
+      width: 100%;
+      height: 10px;
+      bottom: 0;
+      background-position: right;
+      right: 0;
+  }
+  {{ id }} .block-test-drive-our-services-btn {
+      border-radius: 3px;
+      background: #008060;
+      box-shadow: 0 6px 20px -6px #1e2e4826;
+      padding: 14px 44px;
+      display: inline-block;
+      color: #fff;
+      font-size: 16px;
+      font-weight: 600;
+      line-height: 33px;
+      text-decoration: none;
+  }
+
+  {{ id }} .block-test-drive-our-services-btn svg {
+      margin-left: 15px;
+  }
+
+  {{ id }} .block-test-drive-our-services-image-box {
+      width: 54%;
+      padding: 12px 22px 12px 30px;
+      position: relative;
+      overflow: hidden;
+  }
+
+  {{ id }} .block-test-drive-our-services-slider-arrow {
+      width: 64px;
+      height: 64px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: #1a1a1a;
+      border: 5px solid #FFFFFF;
+      box-shadow: 0 6px 20px -6px #1e2e4826;
+      border-radius: 40px;
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      z-index: 1;
+      cursor: pointer;
+  }
+
+  {{ id }} .block-test-drive-our-services-arrow-prev {
+      left: 0px;
+  }
+
+  {{ id }} .block-test-drive-our-services-arrow-next {
+      right: 0px;
+  }
+
+  @media screen and (min-width: 768px) {
+     {{ id }} .block-test-drive-our-services-slider-arrow:hover svg {
+          width: 28px;
+          height: 28px;
+      }
+  }
+
+  @media screen and (max-width: 1400px) and (min-width: 768px) {
+     {{ id }} .block-test-drive-our-services-details-box {
+          padding: 40px 30px;
+      }
+  }
+
+  @media screen and (max-width: 1024px) and (min-width: 768px) {
+     {{ id }} .block-test-drive-our-services-heading {
+          font-size: 35px;
+          line-height: 50px;
+      }
+
+      {{ id }} .block-test-drive-our-services-btn {
+          padding: 14px 20px;
+          font-size: 13px;
+      }
+
+      {{ id }} .block-test-drive-our-services-description p {
+          font-size: 14px;
+          line-height: 24px;
+      }
+  }
+
+  @media screen and (max-width: 767px) {
+     {{ id }} .block-test-drive-our-services-box {
+          padding: 20px 10px;
+          
+      }
+
+      {{ id }} .block-test-drive-our-services-details-box {
+          width: 100%;
+          padding: 0 0 30px;
+      }
+{{ id }} .block-test-drive-inner {
+  
+  padding: 0px;
+}
+    {{ id }} .block-test-drive-our-services-box {
+    
+    width:95%;
+  
+  }
+      {{ id }} .block-test-drive-our-services-image-box {
+          width: 100%;
+          padding: 0;
+      }
+
+      {{ id }} .block-test-drive-our-services-slider-arrow {
+         
+          width: 30px;
+          height: 30px;
+          border-width: 3px;
+      }
+
+     {{ id }} .block-test-drive-our-services-slider-arrow svg {
+          width: 15px;
+          height: 15px;
+      }
+
+     {{ id }} .block-test-drive-our-services-arrow {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          gap: 8px;
+          padding: 16px 0 0;
+      }
+
+     {{ id }} .block-test-drive-our-services-heading {
+          font-size: 30px;
+          line-height: 38px;
+          margin: 0 0 16px;
+      }
+
+     {{ id }} .block-test-drive-our-services-heading br {
+          display: none;
+      }
+
+     {{ id }} .block-test-drive-our-services-description p {
+          font-size: 14px;
+          line-height: 24px;
+      }
+
+     {{ id }} .block-test-drive-our-services-btn {
+          width: 100%;
+          text-align: center;
+      }
+
+      {{ id }} .block-test-drive-our-services-heading span:after {
+          bottom: -5px;
+      }
+
+      {{ id }} .block-test-drive-our-services {
+          padding: 0 0 60px;
+      }
+  }
+    {{ id }} .block-test-drive-our-services-post {
+    display: inline-block;
+    width: 100%;
+    transition: transform 0.5s ease;
+  }
+  img.block-test-drive-our-services-post-image {
+    width: 100%;
+}
+  
+{% endstyle %}
+<div class="section-{{ section.id }}-padding gradient color-{{ section.settings.section_color_scheme }}">
+<div style="background-color: {{ section.settings.background_color1 }};" class="block-test-drive-our-services-box">
+  <div class="block-test-drive-inner">
+  <div class="block-test-drive-our-services-details-box">
+    <h2 class="block-test-drive-our-services-heading">{{ section.settings.title }}</h2>
+    <div class="block-test-drive-our-services-description">
+      <p>
+       {{ section.settings.subtitle }}
+      </p>
+    </div>
+    <div class="block-test-drive-our-services-button">
+      <a
+        href="{{ section.settings.button_link1 }}"
+        class="block-test-drive-our-services-btn"
+        style="background-color: {{ section.settings.background_color2 }}; color: {{ section.settings.text_color }};"
+      >
+        {{ section.settings.button1 }}
+      </a>
+    </div>
+  </div>
+  <div class="block-test-drive-our-services-image-box">
+    <div class="block-test-drive-our-services-image slick-slider">
+      {% for block in section.blocks %}
+        <div class="block-test-drive-our-services-post">
+          <img
+            src="{{ block.settings.image | img_url: '1024x1024' }}"
+            alt="Image {{ forloop.index }}"
+            class="block-test-drive-our-services-post-image"
+            width="auto"
+          height="auto"
+          >
+        </div>
+      {% endfor %}
+    </div>
+    <span class="block-test-drive-our-services-slider-arrow block-test-drive-our-services-arrow-prev">
+      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+        <g clip-path="url(#clip0_343_1389)">
+            <path d="M7.828 10.9967L13.192 5.63275L11.778 4.21875L4 11.9967L11.778 19.7747L13.192 18.3608L7.828 12.9967H20V10.9967H7.828Z" fill="white"></path>
+        </g>
+        <defs>
+            <clipPath id="clip0_343_1389">
+                <rect width="24" height="24" fill="white" transform="matrix(-1 0 0 1 24 0)"></rect>
+            </clipPath>
+        </defs>
+      </svg>
+    </span>
+    <span class="block-test-drive-our-services-slider-arrow block-test-drive-our-services-arrow-next">
+      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+        <g clip-path="url(#clip0_343_1384)">
+            <path d="M16.172 10.9967L10.808 5.63275L12.222 4.21875L20 11.9967L12.222 19.7747L10.808 18.3608L16.172 12.9967H4V10.9967H16.172Z" fill="white"></path>
+        </g>
+        <defs>
+            <clipPath id="clip0_343_1384">
+                <rect width="24" height="24" fill="white"></rect>
+            </clipPath>
+        </defs>
+      </svg>
+    </span>
+  </div>
+  </div>
+</div>
+</div>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+  const imageContainer = document.querySelector('.block-test-drive-our-services-image-box');
+  const images = imageContainer.querySelectorAll('.block-test-drive-our-services-post');
+  let maxHeight = 0;
+  images.forEach(function(image) {
+    maxHeight = Math.max(maxHeight, image.offsetHeight);
+  });
+  imageContainer.style.height = maxHeight + 'px';
+
+  const slider = document.querySelector('.block-test-drive-our-services-image');
+  const slides = slider.querySelectorAll('.block-test-drive-our-services-post');
+  const prevArrow = document.querySelector('.block-test-drive-our-services-arrow-prev');
+  const nextArrow = document.querySelector('.block-test-drive-our-services-arrow-next');
+  let currentIndex = 0;
+  const slideInterval = 3000; // 3 seconds
+  let autoplay;
+  let touchStartX = 0;
+  let touchEndX = 0;
+
+  function showSlide(index) {
+    slides.forEach((slide, i) => {
+      slide.style.transform = `translateX(${(i - index) * 100}%)`;
+    });
+  }
+
+  function nextSlide() {
+    currentIndex = (currentIndex + 1) % slides.length;
+    showSlide(currentIndex);
+  }
+
+  function prevSlide() {
+    currentIndex = (currentIndex - 1 + slides.length) % slides.length;
+    showSlide(currentIndex);
+  }
+
+  function startAutoplay() {
+   // autoplay = setInterval(nextSlide, slideInterval);
+  }
+
+  function stopAutoplay() {
+    clearInterval(autoplay);
+  }
+
+  prevArrow.addEventListener('click', () => {
+    stopAutoplay();
+    prevSlide();
+    startAutoplay();
+  });
+
+  nextArrow.addEventListener('click', () => {
+    stopAutoplay();
+    nextSlide();
+    startAutoplay();
+  });
+
+  slider.addEventListener('mouseover', stopAutoplay);
+  slider.addEventListener('mouseout', startAutoplay);
+
+  slider.addEventListener('touchstart', (e) => {
+    touchStartX = e.touches[0].clientX;
+  });
+
+  slider.addEventListener('touchmove', (e) => {
+    touchEndX = e.touches[0].clientX;
+  });
+
+  slider.addEventListener('touchend', () => {
+    const deltaX = touchEndX - touchStartX;
+    if (Math.abs(deltaX) > 50) { // Adjust the threshold as needed
+      if (deltaX > 0) {
+        prevSlide();
+      } else {
+        nextSlide();
+      }
+    }
+  });
+
+  // Initialize the slider
+  showSlide(currentIndex);
+  startAutoplay();
+});
+
+
+</script>
+
+{% schema %}
+{
+  "name": "Text with Image Slider",
+  "settings": [
+    {
+      "type": "text",
+      "id": "title",
+      "default": "Top Title",
+      "label": "Title"
+    },
+    {
+      "type": "text",
+      "id": "subtitle",
+      "default": "Subtitle",
+      "label": "Subtitle"
+    },
+    {
+      "type": "color",
+      "id": "background_color1",
+      "label": "Background Color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "range",
+      "id": "custom_font_size",
+      "label": "Custom Font Size",
+      "min": 12,
+      "max": 60,
+      "default": 12
+    },
+     {
+      "type": "range",
+      "id": "custom_width",
+      "label": "Width %",
+      "min": 75,
+      "max": 100,
+      "default": 80
+    },
+    {
+      "type": "select",
+      "id": "text_position",
+      "label": "Text Position",
+      "options": [
+        {
+          "value": "left",
+          "label": "Left"
+        },
+        {
+          "value": "center",
+          "label": "Center"
+        },
+        {
+          "value": "right",
+          "label": "Right"
+        }
+      ],
+      "default": "left"
+    },
+    {
+      "type": "text",
+      "id": "button1",
+      "default": "Button Title",
+      "label": "Button Title"
+    },
+    {
+      "type": "url",
+      "id": "button_link1",
+      "label": "Button Link"
+    },
+    {
+      "type": "color",
+      "id": "background_color2",
+      "label": "Button Background Color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Button Text Color",
+      "default": "#ffffff"
+    },
+     {
+      "type": "header",
+      "content": "t:sections.all.padding.section_padding_heading"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "t:sections.all.padding.padding_top",
+      "default": 36
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "t:sections.all.padding.padding_bottom",
+      "default": 36
+    }
+  ],
+  "blocks": [
+    {
+      "type": "image",
+      "name": "Image Items",
+      "limit": 15,
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Image"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Text Image Slider Component"
+    }
+  ]
+}
+{% endschema %}

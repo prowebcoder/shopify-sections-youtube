@@ -1,0 +1,221 @@
+{%- assign id = '#shopify-section-' | append: section.id -%}
+{% assign cell_align = section.settings.cell_align %}
+{% style %}
+     {{ id }}{
+           padding: 10rem 10rem;
+
+     }
+    {{ id }} .counter-container {
+      display: grid;
+      max-width:var(--page-width);
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 20px;
+      padding: 20px;
+     margin: 0 auto;
+    }
+
+    {{ id }} .content {
+      border-radius: 10px;
+      padding: 20px;
+      text-align: center;
+      background-color: #fff;
+      box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+      transition: transform 0.3s ease;
+    }
+
+    {{ id }} .content:hover {
+      transform: translateY(-5px);
+    }
+
+    {{ id }} .counter {
+      font-size: 60px;
+      font-weight: bold;
+      color: #3498db;
+      margin-bottom: 10px;
+    }
+
+    {{ id }} .label {
+      font-size: 60px;
+      font-weight: bold;
+      color: #3498db;
+      margin-bottom: 5px;
+    }
+
+    {{ id }} .description {
+      font-size: 14px;
+      color: #666;
+    }
+    {{ id }} .flex-counter {
+        display: flex;
+        justify-content: center;
+        gap: 2px;
+        align-items: baseline;
+    }
+    @media screen and (max-width: 480px) {
+    {{ id }} .container {
+      grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+      padding: 10px;
+      gap: 10px;
+    }
+
+    {{ id }} .content {
+      padding: 10px;
+    }
+
+   {{ id }} .counter {
+      font-size: 36px;
+    }
+
+   {{ id }} .label {
+      font-size: 14px;
+    }
+
+    {{ id }} .description {
+      font-size: 12px;
+    }
+  }
+{% endstyle %}
+<div class="page-width {{ cell_align }}">
+  <h2 class="counter-title">{{ section.settings.title }}</h2>
+  <h3 class="conter-subtitle">{{ section.settings.subtitle }}</h3>
+</div>
+<div class="counter-container gradient color-{{ section.settings.section_color_scheme }}">
+  {% for block in section.blocks %}
+    <div class="content" data-count="{{ block.settings.number }}">
+      <div class="flex-counter">
+        <div class="counter">0</div>
+        <div class="label">{{ block.settings.label }}</div>
+      </div>
+      <div class="description">{{ block.settings.description }}</div>
+    </div>
+  {% endfor %}
+</div>
+
+<script>
+   document.addEventListener("DOMContentLoaded", function() {
+    const counterElements = document.querySelectorAll('.content');
+    const countedElements = new Set(); // Track elements that have been counted
+    let isCounting = false;
+
+    function startCounting(element, countValue, duration) {
+      const increment = Math.ceil(countValue / (duration / 10));
+      let count = 0;
+      const interval = setInterval(function() {
+        count += increment;
+        if (count >= countValue) {
+          clearInterval(interval);
+          count = countValue;
+          isCounting = false;
+        }
+        element.querySelector('.counter').textContent = count;
+      }, 10);
+    }
+
+    function handleScroll() {
+      if (!isCounting) {
+        counterElements.forEach(function(element) {
+          if (!countedElements.has(element) && isElementInViewport(element)) {
+            const countValue = parseInt(element.getAttribute('data-count'));
+            const duration = Math.min(3000, countValue * 10); // Maximum duration 3 seconds
+            isCounting = true;
+            startCounting(element, countValue, duration);
+            countedElements.add(element);
+          }
+        });
+      }
+    }
+
+    function isElementInViewport(el) {
+      const rect = el.getBoundingClientRect();
+      return (
+        rect.top >= 0 &&
+        rect.left >= 0 &&
+        rect.bottom <= (window.innerHeight || document.documentElement.clientHeight) &&
+        rect.right <= (window.innerWidth || document.documentElement.clientWidth)
+      );
+    }
+
+
+    handleScroll();
+
+
+    window.addEventListener('scroll', handleScroll);
+  });
+</script>
+{% schema %}
+{
+  "name": "Scroll up Counter",
+  "settings": [
+    {
+      "type": "text",
+      "id": "title",
+      "default": "Top Title",
+      "label": "Title"
+    },
+    {
+      "type": "text",
+      "id": "subtitle",
+      "default": "Subtitle",
+      "label": "Subtitle"
+    },
+    {
+      "type": "color_scheme",
+      "id": "section_color_scheme",
+      "label": "t:sections.all.colors.label",
+      "default": "scheme-1"
+    },
+    {
+      "type": "select",
+      "id": "cell_align",
+      "label": "Slide Alignment",
+      "options": [
+        {
+          "value": "center",
+          "label": "Center"
+        },
+        {
+          "value": "left",
+          "label": "Left"
+        },
+        {
+          "value": "right",
+          "label": "right"
+        }
+      ],
+      "default": "center"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "Content",
+      "name": "Content",
+      "limit": 3,
+      "settings": [
+        {
+          "type": "number",
+          "id": "number",
+          "label": "Counter Value",
+          "default": 1
+        },
+        {
+          "type": "text",
+          "id": "label",
+          "default": "K",
+          "label": "Counter Label"
+        },
+        {
+          "type": "text",
+          "id": "description",
+          "default": "description",
+          "label": "description"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Scroll up Counter"
+    }
+  ]
+}
+{% endschema %}

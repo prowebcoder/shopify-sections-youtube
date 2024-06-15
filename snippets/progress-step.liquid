@@ -1,0 +1,107 @@
+<style>
+  .progress__step-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    max-width: 400px;
+    width: 100%;
+    margin-bottom: 1.5rem;
+  }
+
+  .progress__step-container .progress__step-main {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    width: 100%;
+    max-width: 300px;
+    align-items: flex-start;
+    justify-content: space-between;
+    position: relative;
+  }
+
+  .progress__step-container .progress__step-main .step-item{
+    display: flex;
+    flex-direction: column;
+    align-items:center;
+  }
+
+  .progress__step-container .progress__step-main .step-item .step-item-text{
+    text-align: center;
+    font-size: 12px;
+    line-height: normal;
+    font-weight: 600;
+    margin: 6px 0 0;
+  }
+
+  .progress__step-main .circle {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 30px;
+    width: 30px;
+    color: #999;
+    font-size: 14px;
+    font-weight: 500;
+    border-radius: 50%;
+    background: #fff;
+    border: 4px solid #c9c9c9;
+    transition: all 200ms ease;
+    transition-delay: 0s;
+  }
+  .progress__step-main .circle.active {
+    transition-delay: 100ms;
+    border-color: #ff0000;
+    background: #ff0000;
+    color: white;
+  }
+  .progress__step-main .progress-bar {
+    position: absolute;
+    top: 15px;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    height: 4px;
+    width: 174px;
+    background: #c9c9c9;
+    z-index: -1;
+  }
+  .progress-bar .indicator {
+    display: block;
+    height: 100%;
+    width: 40%;
+    background: #ff0000;
+    transition: all 300ms ease;
+  }
+</style>
+
+<div class="progress__step-container">
+  <div class="progress__step-main">
+    <div class="step-item">
+      <div class="circle active">
+        <svg xmlns="http://www.w3.org/2000/svg" height="16" width="14" viewBox="0 0 448 512">
+          <path fill="currentColor" d="M438.6 105.4c12.5 12.5 12.5 32.8 0 45.3l-256 256c-12.5 12.5-32.8 12.5-45.3 0l-128-128c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0L160 338.7 393.4 105.4c12.5-12.5 32.8-12.5 45.3 0z"/>
+        </svg>
+      </div>
+      <p class="step-item-text">
+        <b>Step 1</b> <br>
+        {{ settings.step1 }}
+      </p>
+    </div>
+    <div class="step-item">
+      <div class="circle">2</div>
+      <p class="step-item-text">
+        <b>Step 2</b> <br>
+        {{ settings.step2 }}
+      </p>
+    </div>
+    <div class="step-item">
+      <div class="circle">3</div>
+      <p class="step-item-text">
+        <b>Step 3</b> <br>
+        {{ settings.step3 }}
+      </p>
+    </div>
+    <div class="progress-bar">
+      <div class="indicator"></div>
+    </div>
+  </div>
+</div>
